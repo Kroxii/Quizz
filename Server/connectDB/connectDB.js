@@ -1,14 +1,9 @@
-const mysql = require("mysql2");
-const dotenv = require("dotenv");
+const mongoose = require('mongoose')
 
-dotenv.config()
+function connectDB () {    
+    mongoose.connect('mongodb+srv://Julien:quizz@cluster0.mkel2v3.mongodb.net/')
+        .then(console.log('serveur mongodb connecté'))
+        .catch(error=>console.log(error))
+}
 
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    database: process.env.DB_DATABASE,
-    password: process.env.PASSWORD,
-    waitForConnections:true,
-   
-})
-module.exports = pool.promise();
+module.exports = connectDB

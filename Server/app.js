@@ -12,7 +12,11 @@ app.use(cors())
 app.use('/question', question)
 app.use('/quizz', quizz)
 
+app.get('/', (req, res)=>{
+    res.send('a')
+})
+
 app.listen(port, () => {
     connectDB()
-    console.log('serveur fonctionnel sur ' + port)
+    console.log('http://localhost:' + port)
 })

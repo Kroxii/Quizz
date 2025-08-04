@@ -1,3 +1,4 @@
+const Question = require('../models/questionSchema.js')
 exports.showQuestion = async function (req, res) {
     res.send('<h1>coucou</h1>')
     // try {
