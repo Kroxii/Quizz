@@ -1,0 +1,156 @@
+db = db.getSiblingDB("Quizz");
+
+db.question.insterMany([
+  {
+    label: "Comment dit-on 'thank you' en français ?",
+    theme: "vocabulaire",
+    level: "A2",
+    choix: [
+      { label: "Merci", good: true },
+      { label: "Bonjour", good: false },
+      { label: "Au revoir", good: false },
+    ],
+  },
+  {
+    label: "Quel est l'article défini pour 'chat' ?",
+    theme: "grammaire",
+    level: "A2",
+    choix: [
+      { label: "Le", good: true },
+      { label: "La", good: false },
+      { label: "Les", good: false },
+    ],
+  },
+  {
+    label:
+      "Quelle est la bonne conjugaison du verbe 'être' à la 1ère personne du singulier ?",
+    theme: "conjugaison",
+    level: "A2",
+    choix: [
+      { label: "Je suis", good: true },
+      { label: "Je es", good: false },
+      { label: "Je êtes", good: false },
+    ],
+  },
+  {
+    label: "Choisis le synonyme de 'rapide'",
+    theme: "vocabulaire",
+    level: "B1",
+    choix: [
+      { label: "Vite", good: true },
+      { label: "Lent", good: false },
+      { label: "Heureux", good: false },
+    ],
+  },
+  {
+    label: "Quel mot est féminin ?",
+    theme: "grammaire",
+    level: "B1",
+    choix: [
+      { label: "Table", good: true },
+      { label: "Chien", good: false },
+      { label: "Livre", good: false },
+    ],
+  },
+  {
+    label: "Complète : Il ____ un film.",
+    theme: "conjugaison",
+    level: "B1",
+    choix: [
+      { label: "regarde", good: true },
+      { label: "regardent", good: false },
+      { label: "regardes", good: false },
+    ],
+  },
+  {
+    label: "Quel est le contraire de 'chaud' ?",
+    theme: "vocabulaire",
+    level: "A2",
+    choix: [
+      { label: "Froid", good: true },
+      { label: "Beau", good: false },
+      { label: "Mouillé", good: false },
+    ],
+  },
+  {
+    label: "Quel mot est un adjectif ?",
+    theme: "grammaire",
+    level: "B1",
+    choix: [
+      { label: "Grand", good: true },
+      { label: "Vitesse", good: false },
+      { label: "Rouler", good: false },
+    ],
+  },
+  {
+    label: "Comment dit-on 'Where is the bathroom?' en français ?",
+    theme: "vocabulaire",
+    level: "A2",
+    choix: [
+      { label: "Où sont les toilettes ?", good: true },
+      { label: "Comment ça va ?", good: false },
+      { label: "Quel âge as-tu ?", good: false },
+    ],
+  },
+  {
+    label:
+      "Choisis la bonne conjugaison au passé composé : 'Elle ____ un gâteau.'",
+    theme: "conjugaison",
+    level: "B2",
+    choix: [
+      { label: "a fait", good: true },
+      { label: "est fait", good: false },
+      { label: "fait", good: false },
+    ],
+  },
+  {
+    label: "Quel mot ne va pas avec les autres ?",
+    theme: "vocabulaire",
+    level: "B2",
+    choix: [
+      { label: "Chaise", good: false },
+      { label: "Table", good: false },
+      { label: "Courir", good: true },
+    ],
+  },
+  {
+    label: "Quelle est la bonne phrase ?",
+    theme: "grammaire",
+    level: "C1",
+    choix: [
+      { label: "Je suis allé au cinéma hier.", good: true },
+      { label: "Je allé suis au cinéma hier.", good: false },
+      { label: "Allé au cinéma je suis hier.", good: false },
+    ],
+  },
+  {
+    label: "Complète : Nous ____ du pain.",
+    theme: "conjugaison",
+    level: "A2",
+    choix: [
+      { label: "achetons", good: true },
+      { label: "achete", good: false },
+      { label: "acheter", good: false },
+    ],
+  },
+  {
+    label: "Quel est le pluriel de 'cheval' ?",
+    theme: "grammaire",
+    level: "B1",
+    choix: [
+      { label: "Chevaux", good: true },
+      { label: "Chevals", good: false },
+      { label: "Chevales", good: false },
+    ],
+  },
+  {
+    label: "Comment demande-t-on poliment quelque chose ?",
+    theme: "culture et politesse",
+    level: "A2",
+    choix: [
+      { label: "S'il vous plaît", good: true },
+      { label: "Maintenant", good: false },
+      { label: "Tais-toi", good: false },
+    ],
+  },
+]);
