@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interactif</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Bouton de connexion -->
+    <div class="login-container">
+        <button id="login-btn" class="login-btn">
+            <span id="login-text">Se connecter</span>
+            <span id="user-name" class="user-name hidden"></span>
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- Écran de démarrage -->
+        <div id="start-screen" class="screen active">
+            <h1>Quiz Interactif</h1>
+            <p>Testez vos connaissances avec notre quiz !</p>
+            <div class="quiz-options">
+                <button id="create-quiz-btn" class="btn btn-primary">Créer un questionnaire</button>
+                <button id="create-questions-btn" class="btn btn-secondary">Créer des questions</button>
+                <button id="select-quiz-btn" class="btn btn-third">Sélectionner un questionnaire</button>
+            </div>
+        </div>
+
+        <!-- Écran de sélection de questionnaire -->
+    <div id="quiz-selection-screen" class="screen">
+        <h2>Sélectionner un questionnaire</h2>
+        <div id="quiz-list" class="quiz-list">
+                <!-- Les questionnaires seront listés ici -->
+        </div>
+        <button id="back-to-start-btn" class="btn btn-secondary">Retour</button>
+    </div>
+
+        <!-- Écran de création de questionnaire -->
+        <div id="quiz-creation-screen" class="screen">
+            <h2>Créer un nouveau questionnaire</h2>
+            
+
+    <script src="script.js"></script>
+</body>
+</html>
