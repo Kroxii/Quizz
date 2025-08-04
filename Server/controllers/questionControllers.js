@@ -10,7 +10,10 @@ exports.showQuestion = async function (req, res) {
 
 exports.createQuestion = async function (req, res) {
     try {
-        let newQuestion = new Question(req.body)
+        // let newQuestion = new Question(req.body)
+        let newQuestion = {
+            
+        }
         let savedQuestion = await newQuestion.save()
     } catch (error) {
         throw error
