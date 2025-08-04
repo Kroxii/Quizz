@@ -1,3 +1,5 @@
 module.exports = (req,res)=> {
-    const 
+    const quizz = Joi.object({
+        title : Joi.string().min(2)
+        })
 }
