@@ -19,7 +19,5 @@ On utilise npm install pour installer tout dépendances  dont on a besoin :
 
         Express : pour gérer le serveur et les routes.
 
-        Mongoose : pour gérer la connexion à MongoDB.
-
         Joi : pour valider les données.
 
