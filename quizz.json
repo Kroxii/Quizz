@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Défi A2 - Bases du français",
+    "level": "A2",
+    "questions": [
+      { "$oid": "6890a99e43565f728362ae5e" },
+      { "$oid": "6890a99e43565f728362ae5f" },
+      { "$oid": "6890a99e43565f728362ae60" },
+      { "$oid": "6890a99e43565f728362ae64" },
+      { "$oid": "6890a99e43565f728362ae6a" }
+    ]
+  },
+  {
+    "title": "Grammaire B1 - À toi de jouer !",
+    "level": "B1",
+    "questions": [
+      { "$oid": "6890a99e43565f728362ae62" },
+      { "$oid": "6890a99e43565f728362ae65" },
+      { "$oid": "6890a99e43565f728362ae6b" },
+      { "$oid": "6890a99e43565f728362ae61" },
+      { "$oid": "6890a99e43565f728362ae63" }
+    ]
+  },
+  {
+    "title": "Vocabulaire express A2",
+    "level": "A2",
+    "questions": [
+      { "$oid": "6890a99e43565f728362ae5e" },
+      { "$oid": "6890a99e43565f728362ae64" },
+      { "$oid": "6890a99e43565f728362ae66" },
+      { "$oid": "6890a99e43565f728362ae6c" },
+      { "$oid": "6890a99e43565f728362ae6a" }
+    ]
+  },
+  {
+    "title": "Challenge B2 - Conjugaison & vocabulaire",
+    "level": "B2",
+    "questions": [
+      { "$oid": "6890a99e43565f728362ae67" },
+      { "$oid": "6890a99e43565f728362ae68" },
+      { "$oid": "6890a99e43565f728362ae61" },
+      { "$oid": "6890a99e43565f728362ae65" },
+      { "$oid": "6890a99e43565f728362ae6b" }
+    ]
+  },
+  {
+    "title": "Ultimate Test C1",
+    "level": "C1",
+    "questions": [
+      { "$oid": "6890a99e43565f728362ae69" },
+      { "$oid": "6890a99e43565f728362ae67" },
+      { "$oid": "6890a99e43565f728362ae68" },
+      { "$oid": "6890a99e43565f728362ae66" },
+      { "$oid": "6890a99e43565f728362ae6c" }
+    ]
+  }
+]
