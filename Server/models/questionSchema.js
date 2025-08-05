@@ -7,7 +7,7 @@ const questionSchema = new mongoose.Schema({
   choix: [
     {
       label: { type: String, required: true },
-      bool: { type: Boolean, required: true },
+      good: { type: Boolean, required: true },
     },
   ],
 });
