@@ -1,3 +1,4 @@
+const { ObjectId } = require('bson')
 const Question = require('../models/questionSchema.js')
 exports.showQuestion = async function (req, res) {
     try {
@@ -28,5 +29,14 @@ exports.destroyQuestion = async function (req, res) {
         res.end()
     } catch (error) {
         throw error
+    }
+}
+
+exports.updateQuestion = async function (req,res){
+    try {
+      await Question.findByIdAndUpdate({_id :req.params._id},{$set: req.body},{returnDocument:"after"});
+      
+    }catch(error){
+        return res.status(404).json({error:"Not Found"})
     }
 }
