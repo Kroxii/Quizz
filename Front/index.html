@@ -36,9 +36,74 @@
         <button id="back-to-start-btn" class="btn btn-secondary">Retour</button>
     </div>
 
-        <!-- Écran de création de questionnaire -->
-        <div id="quiz-creation-screen" class="screen">
-            <h2>Créer un nouveau questionnaire</h2>
+    <div id="question-creation-screen" class="screen">
+        <h2>Créer une nouvelle question</h2>
+        <form id="question-form" class="question-form">
+            <div class="form-group">
+                <label for="question-text">Question :</label>
+                <textarea id="question-text" name="question-text" rows="3" placeholder="Saisissez votre question..." required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="question-theme">Thème :</label>
+        <select id="question-theme" name="question-theme" required>
+            <option value="">Sélectionnez un thème</option>
+            <option value="vocabulaire">Vocabulaire</option>
+            <option value="grammaire">Grammaire</option>
+            <option value="conjugaison">Conjugaison</option>
+            <option value="culture">Culture générale</option>
+            <option value="mathematiques">Mathématiques</option>
+            <option value="sciences">Sciences</option>
+            <option value="histoire">Histoire</option>
+            <option value="geographie">Géographie</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="question-level">Niveau :</label>
+        <select id="question-level" name="question-level" required>
+            <option value="">Sélectionnez un niveau</option>
+            <option value="facile">Facile</option>
+            <option value="moyen">Moyen</option>
+            <option value="difficile">Difficile</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+                    <label>Réponses :</label>
+                    <div id="answers-container">
+                        <div class="answer-item">
+                            <input type="text" class="answer-text" placeholder="Réponse 1" required>
+                            <label class="correct-answer">
+                                <input type="radio" name="correct-answer" value="0" required>
+                                Correct
+                            </label>
+                            <button type="button" class="remove-answer-btn" style="display: none;">✕</button>
+                        </div>
+                        <div class="answer-item">
+                            <input type="text" class="answer-text" placeholder="Réponse 2" required>
+                            <label class="correct-answer">
+                                <input type="radio" name="correct-answer" value="1">
+                                Correct
+                            </label>
+                            <button type="button" class="remove-answer-btn" style="display: none;">✕</button>
+                        </div>
+                    </div>
+                    <button type="button" id="add-answer-btn" class="btn btn-secondary">Ajouter une réponse</button>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Créer la question</button>
+                    <button type="button" id="back-to-start-from-questions" class="btn btn-secondary">Retour</button>
+                </div>
+            </form>
+
+            <div id="question-success-message" class="success-message hidden">
+                <p>Question créée avec succès !</p>
+                <button id="create-another-question-btn" class="btn btn-primary">Créer une autre question</button>
+                <button id="back-to-start-after-creation" class="btn btn-secondary">Retour à l'accueil</button>
+            </div>
+        </div>
             
 
     <script src="script.js"></script>
