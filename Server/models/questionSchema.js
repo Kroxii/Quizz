@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const questionSchema = new mongoose.Schema({
   label: { type: String, required: true },
@@ -7,10 +7,10 @@ const questionSchema = new mongoose.Schema({
   choix: [
     {
       label: { type: String, required: true },
-      bool: { type: Boolean, required: true },
+      good: { type: Boolean, required: true },
     },
   ],
 });
 
-const Question = mongoose.model('Question', questionSchema);
+const Question = mongoose.model("Question", questionSchema);
 module.exports = Question;
