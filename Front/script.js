@@ -3,7 +3,9 @@ const createQuizBtn = document.getElementById('create-quiz-btn');
 const createQuestionsBtn = document.getElementById('create-questions-btn');
 const selectQuizBtn = document.getElementById('select-quiz-btn');
 const showQuestionsBtn = document.getElementById('show-questions-btn');
-const showQuestions = document.getElementById('show-questions')
+const showQuestionScreen = document.getElementById('show-questions-screen')
+let showQuestions = document.getElementById('show-questions')
+const backToStartBtn1 = document.getElementById('back-to-start');
 const backToStartBtn = document.getElementById('back-to-start-btn');
 const backToStartFromQuestions = document.getElementById('back-to-start-from-questions');
 const backToStartAfterCreation = document.getElementById('back-to-start-after-creation');
@@ -33,20 +35,6 @@ async function loadQuestions() {
         }
     } catch (error) {
         console.warn('Impossible de charger question.json:', error.message);
-        
-        try {
-            const savedQuestions = localStorage.getItem('quiz-questions');
-            if (savedQuestions) {
-                questions = JSON.parse(savedQuestions);
-                console.log('Questions chargées depuis localStorage:', questions.length, 'questions');
-            } else {
-                questions = [];
-                console.log('Aucune question sauvegardée trouvée, initialisation avec un tableau vide');
-            }
-        } catch (localError) {
-            console.error('Erreur lors du chargement depuis localStorage:', localError);
-            questions = [];
-        }
     }
 }
 
@@ -59,6 +47,10 @@ function showScreen(screenToShow) {
 createQuestionsBtn.addEventListener('click', async () => {
     showScreen(questionCreationScreen);
     updateQuestionCount();
+});
+
+backToStartBtn1.addEventListener('click', () => {
+    showScreen(startScreen);
 });
 
 backToStartBtn.addEventListener('click', () => {
@@ -282,13 +274,6 @@ questionForm.addEventListener('submit', async (e) => {
     questionSuccessMessage.classList.remove('hidden');
     
     updateQuestionCount();
-    
-    try {
-        localStorage.setItem('quiz-questions', JSON.stringify(questions));
-        console.log('Questions sauvegardées dans localStorage');
-    } catch (error) {
-        console.warn('Impossible de sauvegarder dans localStorage:', error);
-    }
 
     const response = await fetch('http://localhost:3000/question', {
         method: 'POST',
@@ -300,26 +285,30 @@ questionForm.addEventListener('submit', async (e) => {
         )
         })
         console.log(questions)
+
+    loadQuestions()
 });
 
 showQuestionsBtn.addEventListener('click', () => {
+    showScreen(showQuestionScreen)
     showQuestions.innerHTML = ''
     questions.forEach(question => {
-        showQuestions.innerHTML += `
-                <div>
-                    <h1>${question.label}</h1>
-                    <button id="${question._id}">X</button>
-                </div>`
-        const deleteBtn = document.getElementById(question._id)
-
+        const div = document.createElement('div')
+        const titre = document.createElement('h1')
+        titre.textContent = question.label
+        const deleteBtn = document.createElement('button')
+        deleteBtn.textContent = 'X'
+        div.append(titre, deleteBtn)
+        showQuestions.append(div)
+        
         deleteBtn.addEventListener('click', async () => {
+            const deletedQuestion = question.label
             fetch(`http://localhost:3000/question/delete/${question._id}`, {
                 method: 'DELETE'
             })
-            .then(res => console.log(res + ' bien supprimé'))
+            .then(console.log(deletedQuestion + ' bien supprimé'))
             .catch(err=>console.log(err))
-
-            questions.filter(q => q._id !== question._id )
+            div.remove()
         })
 })
 })
