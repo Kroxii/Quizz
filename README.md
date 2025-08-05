@@ -14,6 +14,8 @@ Avant de te lancer, voici ce que tu dois faire :
 
 git clone <https://github.com/Kroxii/Quizz.git>
 
+cd Quizz
+
 
 ```
 
@@ -23,46 +25,105 @@ On utilise npm install pour installer tout dépendances dont on a besoin :
 
 ```bash
 
-    npm init -y
+    npm install
 
 ```
 
-    Tu trouveras dans le projet des dépendances comme :
+### Dépendances principales:
 
-        Express : pour gérer le serveur et les routes.
-
-        Joi : pour valider les données (Validator).
-
-        mongoss pour la connection bases de donnée
-
-        mongoDb pour notre Bases de donnée non relatif
-
-        nodemon pour le server
+- **Express** : pour gérer le serveur et les routes
+- **Joi** : pour valider les données (validators)
+- **Mongoose** : pour interagir avec la base de données MongoDB
+- **MongoDB** : base de données NoSQL utilisée pour stocker les quizz et questions
+- **Nodemon** : pour recharger automatiquement le serveur pendant le développement
 
 ## Lancer le projet
 
-### Mettre en place votre donnée sur votre MongoDB
+### 1. Configuration de la base de données
 
-    Pour lancer votre serveur !
+Assure-toi d’avoir une instance MongoDB active (en local ou via un service cloud comme MongoDB Atlas). Renseigne l’URL de connexion dans connectDB.js si besoin.
+
+Tu as les fichier en Json pour replir un peu ta db si tu veux a la rasine pour question et quizz
+
+### 2. Démarrer le serveur
+
+Depuis le dossier `Server`, lance :
 
 ```bash
 
 node app.js
 
-# Faire attention etre bien dans le chemain de son serveur sur tes commande Bash
+```
+
+ou , pour le développement
+
+```bash
+
+npx nodemon app.js
 
 ```
 
-Puis apres pour lancer votre serveur avec live serveur sur Votre VSCode 
+> Important : vérifie bien que tu es dans le bon dossier (`Server/`) quand tu lances cette commande.
 
-### Technologie 
+### 3. Lancer le front
 
-- Html / CSS / JavaScript 
-- Node.js
-- NoSql / MongoDb
+Ouvre `Front/index.html` avec Live Server depuis VS Code, ou simplement dans ton navigateur.
 
-## Fonctionnalitées 
+---
 
-- Crée une question 
-- Crée un Quizz 
-- Supprimez une question 
+## Technologies utilisées
+
+- HTML / CSS / JavaScript
+- Node.js / Express
+- MongoDB / Mongoose (NoSQL)
+
+---
+
+## Fonctionnalités
+
+- Créer une question
+- Créer un quizz
+- Supprimer une question
+- Gérer les données via des routes API REST
+
+---
+
+## Arborescence du projet
+
+```
+Quizz/
+│
+├── Front/
+│   ├── index.html
+│   ├── script.js
+│   └── styles.js
+│
+├── Server/
+│   ├── connectDB/
+│   │   └── connectDB.js
+│   ├── controllers/
+│   │   ├── questionControllers.js
+│   │   └── quizzControllers.js
+│   ├── models/
+│   │   ├── questionSchema.js
+│   │   └── quizzSchema.js
+│   ├── routes/
+│   │   ├── questionRouter.js
+│   │   └── quizzRouter.js
+│   ├── validator/
+│   │   ├── validatorQuestion.js
+│   │   └── validatorQuizz.js
+│   └── app.js
+│
+├── questions.json
+├── quizz.json
+└── README.md
+```
+
+---
+
+## Auteurs
+
+Fait avec cœur ❤️ par :  
+**Julien**, **Remi**,**Deriick**
+**Nina** et son équipe de choc
