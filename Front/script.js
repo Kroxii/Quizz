@@ -22,7 +22,7 @@ let questions = [];
 
 async function loadQuestions() {
     try {
-        const response = await fetch('./question.json');
+        const response = await fetch('http://localhost:3000/question');
         if (response.ok) {
             questions = await response.json();
             console.log('Questions chargées depuis question.json:', questions.length, 'questions');
@@ -54,7 +54,7 @@ function showScreen(screenToShow) {
     screenToShow.classList.add('active');
 }
 
-createQuestionsBtn.addEventListener('click', () => {
+createQuestionsBtn.addEventListener('click', async () => {
     showScreen(questionCreationScreen);
     updateQuestionCount();
 });
@@ -287,6 +287,16 @@ questionForm.addEventListener('submit', async (e) => {
     } catch (error) {
         console.warn('Impossible de sauvegarder dans localStorage:', error);
     }
+
+    const response = await fetch('http://localhost:3000/question', {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify(
+    newQuestion
+  )
+})
 });
 
 document.addEventListener('DOMContentLoaded', () => {
