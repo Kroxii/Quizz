@@ -1,8 +1,7 @@
 const express = require("express");
-const fs = require('fs');
 const app = express();
 const port = 3000;
-const { connectDB } = require("./connectDB/connectDB.js");
+const connectDB  = require("./connectDB/connectDB.js");
 const question = require("./routers/questionRouter.js");
 const quizz = require("./routers/quizzRouter.js");
 const cors = require("cors");
@@ -18,5 +17,6 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
+  connectDB();
   console.log("http://localhost:" + port);
 });

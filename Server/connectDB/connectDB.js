@@ -2,7 +2,7 @@ const { mongoose } = require("mongoose");
 
 function connectDB() {
   mongoose.connect(
-    "mongodb+srv://nina00066:0000@cluster0.mkel2v3.mongodb.net/Quizz?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://lnina00066:0000@cluster0.mkel2v3.mongodb.net/Quizz?retryWrites=true&w=majority&appName=Cluster0"
   );
   try {
     console.log("serveur mongodb connecté");
@@ -12,4 +12,4 @@ function connectDB() {
 }
 
 
-module.exports = { connectDB };
+module.exports =  connectDB ;
