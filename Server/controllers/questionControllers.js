@@ -13,7 +13,9 @@ exports.createQuestion = async function (req, res) {
     try {
         let newQuestion = new Question(req.body)
         let savedQuestion = await newQuestion.save()
+        res.send(savedQuestion)
     } catch (error) {
         throw error
     }
+    
 }
