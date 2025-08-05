@@ -24,7 +24,7 @@ exports.createQuestion = async function (req, res) {
 }
 
 exports.destroyQuestion = async function (req, res) {
-    try {
-        let delQuestion = await Question.findOneAndDelete({_id = })
-    }
+    // try {
+    //     let delQuestion = await Question.findOneAndDelete({_id = })
+    // }
 }
