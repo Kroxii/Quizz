@@ -7,4 +7,5 @@ router.get("/", controller.showQuestion);
 router.post("/", controller.createQuestion, validatorQuestion);
 router.delete("/delete/:id", controller.destroyQuestion);
 router.patch("/update/:id",controller.updateQuestion)
+
 module.exports = router;
