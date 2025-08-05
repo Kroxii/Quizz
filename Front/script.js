@@ -2,6 +2,8 @@ const loginBtn = document.getElementById('login-btn');
 const createQuizBtn = document.getElementById('create-quiz-btn');
 const createQuestionsBtn = document.getElementById('create-questions-btn');
 const selectQuizBtn = document.getElementById('select-quiz-btn');
+const showQuestionsBtn = document.getElementById('show-questions-btn');
+const showQuestions = document.getElementById('show-questions')
 const backToStartBtn = document.getElementById('back-to-start-btn');
 const backToStartFromQuestions = document.getElementById('back-to-start-from-questions');
 const backToStartAfterCreation = document.getElementById('back-to-start-after-creation');
@@ -294,10 +296,33 @@ questionForm.addEventListener('submit', async (e) => {
             'Content-Type' : 'application/json'
         },
         body: JSON.stringify(
-    newQuestion
-  )
-})
+            newQuestion
+        )
+        })
+        console.log(questions)
 });
+
+showQuestionsBtn.addEventListener('click', () => {
+    showQuestions.innerHTML = ''
+    questions.forEach(question => {
+        showQuestions.innerHTML += `
+                <div>
+                    <h1>${question.label}</h1>
+                    <button id="${question._id}">X</button>
+                </div>`
+        const deleteBtn = document.getElementById(question._id)
+
+        deleteBtn.addEventListener('click', async () => {
+            fetch(`http://localhost:3000/question/delete/${question._id}`, {
+                method: 'DELETE'
+            })
+            .then(res => console.log(res + ' bien supprimé'))
+            .catch(err=>console.log(err))
+
+            questions.filter(q => q._id !== question._id )
+        })
+})
+})
 
 document.addEventListener('DOMContentLoaded', () => {
     loadQuestions().then(() => {
