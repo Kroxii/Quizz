@@ -1,11 +1,10 @@
 exports.showQuizz = async function (req, res) {
-    res.send('coucou')
-    // try {
-    //     const quizz = await Question.find()
-    //     res.json(quizz)
-    // } catch (error) {
-    //     console.log(error)
-    // }
+    try {
+        const quizz = await Question.find()
+        res.json(quizz)
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 exports.createQuizz = async function (req, res) {
