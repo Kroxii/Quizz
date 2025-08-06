@@ -39,20 +39,6 @@ async function loadQuestions() {
         }
     } catch (error) {
         console.warn('Impossible de charger question.json:', error.message);
-        
-        try {
-            const savedQuestions = localStorage.getItem('quiz-questions');
-            if (savedQuestions) {
-                questions = JSON.parse(savedQuestions);
-                console.log('Questions chargées depuis localStorage:', questions.length, 'questions');
-            } else {
-                questions = [];
-                console.log('Aucune question sauvegardée trouvée, initialisation avec un tableau vide');
-            }
-        } catch (localError) {
-            console.error('Erreur lors du chargement depuis localStorage:', localError);
-            questions = [];
-        }
     }
 }
 
@@ -71,12 +57,6 @@ createQuizBtn.addEventListener('click', async () => {
 createQuestionsBtn.addEventListener('click', async () => {
     showScreen(questionCreationScreen);
     updateQuestionCount();
-});
-
-selectQuizBtn.addEventListener('click', async () => {
-    await loadQuizzes();
-    displayQuizList();
-    showScreen(quizSelectionScreen);
 });
 
 backToStartBtn1.addEventListener('click', () => {
@@ -324,58 +304,37 @@ questionForm.addEventListener('submit', async (e) => {
         )
         })
         console.log(questions)
+
+    loadQuestions()
 });
 
-showQuestionsBtn.addEventListener('click', async () => {
+showQuestionsBtn.addEventListener('click', () => {
     showScreen(showQuestionScreen)
-    showQuestions.innerHTML = '';
-    await loadQuestions();
-    
-    if (questions.length === 0) {
-        showQuestions.innerHTML = '<p>Aucune question disponible.</p>';
-        return;
-    }
-
+    showQuestions.innerHTML = ''
     questions.forEach(question => {
-        const questionDiv = document.createElement('div');
-        questionDiv.style.cssText = 'border: 1px solid #ccc; margin: 10px; padding: 10px; border-radius: 5px;';
-        questionDiv.innerHTML = `
-            <h3>${question.label}</h3>
-            <p><strong>Thème:</strong> ${question.theme}</p>
-            <p><strong>Niveau:</strong> ${question.level}</p>
-            <div><strong>Réponses:</strong></div>
-            <ul>
-                ${question.choix.map(choix => `<li style="color: ${choix.good ? 'green' : 'black'}">${choix.label} ${choix.good ? '✓' : ''}</li>`).join('')}
-            </ul>
-            ${question._id ? `<button class="delete-btn" data-id="${question._id}">Supprimer</button>` : ''}
-        `;
-        showQuestions.appendChild(questionDiv);
-    });
+        const div = document.createElement('div')
+        const titre = document.createElement('h1')
+        titre.textContent = question.label
+        const deleteBtn = document.createElement('button')
+        deleteBtn.textContent = 'X'
+        div.append(titre, deleteBtn)
+        showQuestions.append(div)
+        
+        deleteBtn.addEventListener('click', async () => {
+            const deletedQuestion = question.label
+            fetch(`http://localhost:3000/question/delete/${question._id}`, {
+                method: 'DELETE'
+            })
+            .then(console.log(deletedQuestion + ' bien supprimé'))
+            .catch(err=>console.log(err))
+            div.remove()
+        })
+})
+})
 
-    const deleteButtons = showQuestions.querySelectorAll('.delete-btn');
-    deleteButtons.forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            const questionId = e.target.getAttribute('data-id');
-            if (confirm('Êtes-vous sûr de vouloir supprimer cette question ?')) {
-                try {
-                    const response = await fetch(`/localhost:3000/quizz`, {
-                        method: 'DELETE'
-                    });
-                    
-                    if (response.ok) {
-                        console.log('Question supprimée avec succès');
-                        await loadQuestions();
-                        showQuestionsBtn.click();
-                    } else {
-                        console.error('Erreur lors de la suppression');
-                        alert('Erreur lors de la suppression de la question');
-                    }
-                } catch (error) {
-                    console.error('Erreur:', error);
-                    alert('Erreur lors de la suppression de la question');
-                }
-            }
-        });
+document.addEventListener('DOMContentLoaded', () => {
+    loadQuestions().then(() => {
+        updateQuestionCount();
     });
 });
 
