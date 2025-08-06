@@ -1,14 +1,11 @@
-const {Question} = require('../models/questionSchema.js')
-exports.showQuizz = async function (req, res) {
-//   res.send("coucou");
-  // try {
-  //     const quizz = await Question.find()
-  //     res.json(quizz)
-  // } catch (error) {
-  //     console.log(error)
-  // }
-  const all = await Question.find();
-  res.json(all);
+const Quizz = require("../models/quizzSchema.js");
+exports.showQuizz = async function (req, res) {;
+ try {
+     const quizz = await Quizz.find()
+     res.json(quizz)
+ } catch (error) {
+     console.log(error)
+   }
 };
 
 exports.createQuizz = async function (req, res) {

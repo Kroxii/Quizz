@@ -4,6 +4,6 @@ const controller = require("../controllers/quizzControllers");
 
 
 router.get("/", controller.showQuizz);
-router.post("/", controller.createQuizz , validatorQuizz);
+router.post("/", controller.createQuizz);
 // supp Quizz 
 module.exports = router;
