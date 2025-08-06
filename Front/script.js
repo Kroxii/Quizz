@@ -56,9 +56,35 @@ const questionSuccessMessage = document.getElementById(
   "question-success-message"
 );
 >>>>>>> 7a242f1c712148d0240c05671c6af6e78996a2fc
+const loginBtn = document.getElementById('login-btn');
+const createQuizBtn = document.getElementById('create-quiz-btn');
+const createQuestionsBtn = document.getElementById('create-questions-btn');
+const selectQuizBtn = document.getElementById('select-quiz-btn');
+const showQuestionsBtn = document.getElementById('show-questions-btn');
+const showQuestionScreen = document.getElementById('show-questions-screen')
+let showQuestions = document.getElementById('show-questions')
+const backToStartBtn1 = document.getElementById('back-to-start');
+const backToStartBtn = document.getElementById('back-to-start-btn');
+const backToStartFromQuestions = document.getElementById('back-to-start-from-questions');
+const backToStartAfterCreation = document.getElementById('back-to-start-after-creation');
+const loginText = document.getElementById('login-text');
+const userName = document.getElementById('user-name');
+const startScreen = document.getElementById('start-screen');
+const quizSelectionScreen = document.getElementById('quiz-selection-screen');
+const quizCreationScreen = document.getElementById('quiz-creation-screen');
+const questionCreationScreen = document.getElementById('question-creation-screen');
+const quizList = document.getElementById('quiz-list');
+const questionForm = document.getElementById('question-form');
+const quizForm = document.getElementById('quiz-form');
+const quizSuccessMessage = document.getElementById('quiz-success-message');
+const availableQuestions = document.getElementById('available-questions');
+const addAnswerBtn = document.getElementById('add-answer-btn');
+const createAnotherQuestionBtn = document.getElementById('create-another-question-btn');
+const questionSuccessMessage = document.getElementById('question-success-message');
 let currentUser = null;
 let questions = [];
 let quizzes = [];
+
 
 async function loadQuestions() {
 <<<<<<< HEAD
@@ -71,44 +97,14 @@ async function loadQuestions() {
             throw new Error('Erreur lors du chargement des questions depuis la DB');
         }
     } catch (error) {
-        console.warn('Impossible de charger les questions depuis la DB:', error.message);
-        
-        try {
-            const savedQuestions = localStorage.getItem('quiz-questions');
-            if (savedQuestions) {
-                questions = JSON.parse(savedQuestions);
-                console.log('Questions chargées depuis localStorage:', questions.length, 'questions');
-            } else {
-                questions = [];
-                console.log('Aucune question sauvegardée trouvée, initialisation avec un tableau vide');
-            }
-        } catch (localError) {
-            console.error('Erreur lors du chargement depuis localStorage:', localError);
-            questions = [];
-        }
-=======
-  try {
-    const response = await fetch("http://localhost:3000/question");
-    if (response.ok) {
-      questions = await response.json();
-      console.log(
-        "Questions chargées depuis question.json:",
-        questions.length,
-        "questions"
-      );
-    } else {
-      throw new Error("Fichier question.json non trouvé");
->>>>>>> 7a242f1c712148d0240c05671c6af6e78996a2fc
+        console.warn('Impossible de charger question.json:', error.message);
     }
-  } catch (error) {
-    console.warn("Impossible de charger question.json:", error.message);
-  }
 }
 
 function showScreen(screenToShow) {
-  const screens = document.querySelectorAll(".screen");
-  screens.forEach((screen) => screen.classList.remove("active"));
-  screenToShow.classList.add("active");
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(screen => screen.classList.remove('active'));
+    screenToShow.classList.add('active');
 }
 
 <<<<<<< HEAD
@@ -118,10 +114,14 @@ createQuizBtn.addEventListener('click', async () => {
     showScreen(quizCreationScreen);
 });
 
-createQuestionsBtn.addEventListener('click', async () => {
-    showScreen(questionCreationScreen);
-    updateQuestionCount();
+createQuestionsBtn.addEventListener("click", async () => {
+  showScreen(questionCreationScreen);
+  updateQuestionCount();
 });
+
+backToStartBtn1.addEventListener('click', () => {
+    showScreen(startScreen)
+    });
 
 selectQuizBtn.addEventListener('click', async () => {
     await loadQuizzes();
@@ -156,6 +156,12 @@ backToStartAfterCreation.addEventListener("click", () => {
 });
 
 <<<<<<< HEAD
+createAnotherQuestionBtn.addEventListener("click", () => {
+  questionSuccessMessage.classList.add("hidden");
+  questionForm.classList.remove("hidden");
+  resetQuestionForm();
+});
+
 const createAnotherQuizBtn = document.getElementById('create-another-quiz-btn');
 if (createAnotherQuizBtn) {
     createAnotherQuizBtn.addEventListener('click', () => {
@@ -176,6 +182,7 @@ createAnotherQuestionBtn.addEventListener("click", () => {
 
 addAnswerBtn.addEventListener("click", addAnswerOption);
 >>>>>>> 7a242f1c712148d0240c05671c6af6e78996a2fc
+addAnswerBtn.addEventListener("click", addAnswerOption);
 
 function addAnswerOption() {
   const answersContainer = document.getElementById("answers-container");
@@ -296,7 +303,6 @@ function updateQuestionCount() {
   }
 }
 
-<<<<<<< HEAD
 questionForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -374,92 +380,6 @@ questionForm.addEventListener('submit', async (e) => {
         level: level,
         choix: answers
     };
-=======
-questionForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
->>>>>>> 7a242f1c712148d0240c05671c6af6e78996a2fc
-
-  console.log("=== DÉBUT DU DÉBOGAGE DU FORMULAIRE ===");
-
-  const formData = new FormData(questionForm);
-  const questionText = formData.get("question-text");
-  const theme = formData.get("question-theme");
-  const level = formData.get("question-level");
-  const correctAnswerIndex = formData.get("correct-answer");
-
-  console.log("Données du formulaire:");
-  console.log("- Question:", questionText);
-  console.log("- Thème:", theme);
-  console.log("- Niveau:", level);
-  console.log("- Index réponse correcte:", correctAnswerIndex);
-
-  // Validation de base
-  if (!questionText || questionText.trim() === "") {
-    alert("Veuillez saisir une question.");
-    console.log("❌ Erreur: Question vide");
-    return;
-  }
-
-  if (!theme || theme === "") {
-    alert("Veuillez sélectionner un thème.");
-    console.log("❌ Erreur: Thème non sélectionné");
-    return;
-  }
-
-  if (!level || level === "") {
-    alert("Veuillez sélectionner un niveau.");
-    console.log("❌ Erreur: Niveau non sélectionné");
-    return;
-  }
-
-  if (!correctAnswerIndex && correctAnswerIndex !== "0") {
-    alert("Veuillez sélectionner une réponse correcte.");
-    console.log("❌ Erreur: Aucune réponse correcte sélectionnée");
-    return;
-  }
-
-  const answerTexts = questionForm.querySelectorAll(".answer-text");
-  const answers = [];
-  const correctIndex = parseInt(correctAnswerIndex);
-
-  console.log("Traitement des réponses:");
-  answerTexts.forEach((input, index) => {
-    const answerText = input.value.trim();
-    if (answerText) {
-      const answer = {
-        label: answerText,
-        good: index === correctIndex,
-      };
-      answers.push(answer);
-      console.log(
-        `- Réponse ${index + 1}: "${answerText}" ${
-          answer.good ? "(CORRECTE)" : ""
-        }`
-      );
-    }
-  });
-
-  if (answers.length < 2) {
-    alert("Vous devez avoir au moins 2 réponses remplies.");
-    console.log("❌ Erreur: Moins de 2 réponses");
-    return;
-  }
-
-  const hasCorrectAnswer = answers.some((answer) => answer.good === true);
-  if (!hasCorrectAnswer) {
-    alert(
-      "Aucune réponse correcte n'a été trouvée. Veuillez vérifier votre sélection."
-    );
-    console.log("❌ Erreur: Aucune réponse marquée comme correcte");
-    return;
-  }
-
-  const newQuestion = {
-    label: questionText.trim(),
-    theme: theme,
-    level: level,
-    choix: answers,
-  };
 
   questions.push(newQuestion);
   console.log("✅ Nouvelle question créée avec succès:", newQuestion);
@@ -509,87 +429,7 @@ showQuestionsBtn.addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", () => {
   loadQuestions().then(() => {
     updateQuestionCount();
-<<<<<<< HEAD
-    
-    try {
-        localStorage.setItem('quiz-questions', JSON.stringify(questions));
-        console.log('Questions sauvegardées dans localStorage');
-    } catch (error) {
-        console.warn('Impossible de sauvegarder dans localStorage:', error);
-    }
-
-    const response = await fetch('http://localhost:3000/question', {
-        method: 'POST',
-        headers: {
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify(newQuestion)
-    });
-
-    if (response.ok) {
-        const result = await response.json();
-        console.log('Question sauvegardée en DB:', result);
-        await loadQuestions();
-    } else {
-        console.error('Erreur lors de la sauvegarde en DB');
-    }
-    
-    console.log(questions);
-});
-
-showQuestionsBtn.addEventListener('click', async () => {
-    showQuestions.innerHTML = '';
-    await loadQuestions();
-    
-    if (questions.length === 0) {
-        showQuestions.innerHTML = '<p>Aucune question disponible.</p>';
-        return;
-    }
-
-    questions.forEach(question => {
-        const questionDiv = document.createElement('div');
-        questionDiv.style.cssText = 'border: 1px solid #ccc; margin: 10px; padding: 10px; border-radius: 5px;';
-        questionDiv.innerHTML = `
-            <h3>${question.label}</h3>
-            <p><strong>Thème:</strong> ${question.theme}</p>
-            <p><strong>Niveau:</strong> ${question.level}</p>
-            <div><strong>Réponses:</strong></div>
-            <ul>
-                ${question.choix.map(choix => `<li style="color: ${choix.good ? 'green' : 'black'}">${choix.label} ${choix.good ? '✓' : ''}</li>`).join('')}
-            </ul>
-            ${question._id ? `<button class="delete-btn" data-id="${question._id}">Supprimer</button>` : ''}
-        `;
-        showQuestions.appendChild(questionDiv);
-    });
-
-    const deleteButtons = showQuestions.querySelectorAll('.delete-btn');
-    deleteButtons.forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            const questionId = e.target.getAttribute('data-id');
-            if (confirm('Êtes-vous sûr de vouloir supprimer cette question ?')) {
-                try {
-                    const response = await fetch(`/localhost:3000/quizz`, {
-                        method: 'DELETE'
-                    });
-                    
-                    if (response.ok) {
-                        console.log('Question supprimée avec succès');
-                        await loadQuestions();
-                        showQuestionsBtn.click();
-                    } else {
-                        console.error('Erreur lors de la suppression');
-                        alert('Erreur lors de la suppression de la question');
-                    }
-                } catch (error) {
-                    console.error('Erreur:', error);
-                    alert('Erreur lors de la suppression de la question');
-                }
-            }
-        });
-    });
-=======
   });
->>>>>>> 7a242f1c712148d0240c05671c6af6e78996a2fc
 });
 
 async function loadQuizzes() {
@@ -689,6 +529,7 @@ function resetQuizForm() {
 
 async function saveQuizToDatabase(quizData) {
     try {
+        console.log(quizData)
         const response = await fetch('http://localhost:3000/quizz', {
             method: 'POST',
             headers: {
@@ -747,11 +588,11 @@ quizForm.addEventListener('submit', async (e) => {
     
     checkboxes.forEach(checkbox => {
         const questionIndex = parseInt(checkbox.value);
-        selectedQuestions.push(questions[questionIndex]);
+        selectedQuestions.push(questions[questionIndex]._id)
     });
 
     const newQuiz = {
-        name: quizName.trim(),
+        title: quizName.trim(),
         description: quizDescription.trim(),
         theme: quizTheme,
         level: quizLevel,
