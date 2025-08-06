@@ -1,4 +1,5 @@
-const { mongoose, Schema } = require("mongoose");
+const { mongoose } = require("mongoose");
+
 const quizz = new mongoose.Schema({
   title: { type: String, required: true },
   level: { type: String, required: true },

@@ -54,9 +54,9 @@ createQuizBtn.addEventListener('click', async () => {
     showScreen(quizCreationScreen);
 });
 
-createQuestionsBtn.addEventListener('click', async () => {
-    showScreen(questionCreationScreen);
-    updateQuestionCount();
+createQuestionsBtn.addEventListener("click", async () => {
+  showScreen(questionCreationScreen);
+  updateQuestionCount();
 });
 
 backToStartBtn1.addEventListener('click', () => {
@@ -69,23 +69,23 @@ selectQuizBtn.addEventListener('click', async () => {
     showScreen(quizSelectionScreen);
 });
 
-backToStartBtn.addEventListener('click', () => {
-    showScreen(startScreen);
+backToStartBtn.addEventListener("click", () => {
+  showScreen(startScreen);
 });
 
-backToStartFromQuestions.addEventListener('click', () => {
-    showScreen(startScreen);
+backToStartFromQuestions.addEventListener("click", () => {
+  showScreen(startScreen);
 });
 
-backToStartAfterCreation.addEventListener('click', () => {
-    showScreen(startScreen);
-    resetQuestionForm();
+backToStartAfterCreation.addEventListener("click", () => {
+  showScreen(startScreen);
+  resetQuestionForm();
 });
 
-createAnotherQuestionBtn.addEventListener('click', () => {
-    questionSuccessMessage.classList.add('hidden');
-    questionForm.classList.remove('hidden');
-    resetQuestionForm();
+createAnotherQuestionBtn.addEventListener("click", () => {
+  questionSuccessMessage.classList.add("hidden");
+  questionForm.classList.remove("hidden");
+  resetQuestionForm();
 });
 
 const createAnotherQuizBtn = document.getElementById('create-another-quiz-btn');
@@ -98,77 +98,89 @@ if (createAnotherQuizBtn) {
     });
 }
 
-addAnswerBtn.addEventListener('click', addAnswerOption);
+const createAnotherQuizBtn = document.getElementById('create-another-quiz-btn');
+if (createAnotherQuizBtn) {
+    createAnotherQuizBtn.addEventListener('click', () => {
+        quizSuccessMessage.classList.add('hidden');
+        quizForm.classList.remove('hidden');
+        resetQuizForm();
+        displayAvailableQuestions();
+    });
+}
+
+addAnswerBtn.addEventListener("click", addAnswerOption);
 
 function addAnswerOption() {
-    const answersContainer = document.getElementById('answers-container');
-    const answerItems = answersContainer.querySelectorAll('.answer-item');
-    const answerIndex = answerItems.length;
-    
-    if (answerIndex >= 4) {
-        alert('Vous ne pouvez pas ajouter plus de 4 réponses.');
-        return;
-    }
-    
-    const answerItem = document.createElement('div');
-    answerItem.className = 'answer-item';
-    answerItem.innerHTML = `
-        <input type="text" class="answer-text" placeholder="Réponse ${answerIndex + 1}" required>
+  const answersContainer = document.getElementById("answers-container");
+  const answerItems = answersContainer.querySelectorAll(".answer-item");
+  const answerIndex = answerItems.length;
+
+  if (answerIndex >= 4) {
+    alert("Vous ne pouvez pas ajouter plus de 4 réponses.");
+    return;
+  }
+
+  const answerItem = document.createElement("div");
+  answerItem.className = "answer-item";
+  answerItem.innerHTML = `
+        <input type="text" class="answer-text" placeholder="Réponse ${
+          answerIndex + 1
+        }" required>
         <label class="correct-answer">
             <input type="radio" name="correct-answer" value="${answerIndex}">
             Correct
         </label>
         <button type="button" class="remove-answer-btn">✕</button>
     `;
-    
-    answersContainer.appendChild(answerItem);
-    updateRemoveButtons();
-    
-    const removeBtn = answerItem.querySelector('.remove-answer-btn');
-    removeBtn.addEventListener('click', () => removeAnswerOption(answerItem));
+
+  answersContainer.appendChild(answerItem);
+  updateRemoveButtons();
+
+  const removeBtn = answerItem.querySelector(".remove-answer-btn");
+  removeBtn.addEventListener("click", () => removeAnswerOption(answerItem));
 }
 
 function removeAnswerOption(answerItem) {
-    const answersContainer = document.getElementById('answers-container');
-    const answerItems = answersContainer.querySelectorAll('.answer-item');
-    
-    if (answerItems.length <= 2) {
-        alert('Vous devez avoir au moins 2 réponses.');
-        return;
-    }
-    
-    answerItem.remove();
-    updateAnswerPlaceholders();
-    updateRemoveButtons();
+  const answersContainer = document.getElementById("answers-container");
+  const answerItems = answersContainer.querySelectorAll(".answer-item");
+
+  if (answerItems.length <= 2) {
+    alert("Vous devez avoir au moins 2 réponses.");
+    return;
+  }
+
+  answerItem.remove();
+  updateAnswerPlaceholders();
+  updateRemoveButtons();
 }
 
 function updateRemoveButtons() {
-    const answerItems = document.querySelectorAll('.answer-item');
-    const removeButtons = document.querySelectorAll('.remove-answer-btn');
-    
-    removeButtons.forEach(btn => {
-        btn.style.display = answerItems.length > 2 ? 'flex' : 'none';
-    });
+  const answerItems = document.querySelectorAll(".answer-item");
+  const removeButtons = document.querySelectorAll(".remove-answer-btn");
+
+  removeButtons.forEach((btn) => {
+    btn.style.display = answerItems.length > 2 ? "flex" : "none";
+  });
 }
 
 function updateAnswerPlaceholders() {
-    const answerTexts = document.querySelectorAll('.answer-text');
-    const radioInputs = document.querySelectorAll('input[name="correct-answer"]');
-    
-    answerTexts.forEach((input, index) => {
-        input.placeholder = `Réponse ${index + 1}`;
-    });
-    
-    radioInputs.forEach((radio, index) => {
-        radio.value = index;
-    });
+  const answerTexts = document.querySelectorAll(".answer-text");
+  const radioInputs = document.querySelectorAll('input[name="correct-answer"]');
+
+  answerTexts.forEach((input, index) => {
+    input.placeholder = `Réponse ${index + 1}`;
+  });
+
+  radioInputs.forEach((radio, index) => {
+    radio.value = index;
+  });
 }
 
 function resetQuestionForm() {
-    questionForm.reset();
+  questionForm.reset();
 
-    const answersContainer = document.getElementById('answers-container');
-    answersContainer.innerHTML = `
+  const answersContainer = document.getElementById("answers-container");
+  answersContainer.innerHTML = `
         <div class="answer-item">
             <input type="text" class="answer-text" placeholder="Réponse 1" required>
             <label class="correct-answer">
@@ -187,31 +199,34 @@ function resetQuestionForm() {
         </div>
     `;
 
-    const removeButtons = answersContainer.querySelectorAll('.remove-answer-btn');
-    removeButtons.forEach((btn, index) => {
-        const answerItem = btn.closest('.answer-item');
-        btn.addEventListener('click', () => removeAnswerOption(answerItem));
-    });
-    
-    updateQuestionCount();
+  const removeButtons = answersContainer.querySelectorAll(".remove-answer-btn");
+  removeButtons.forEach((btn, index) => {
+    const answerItem = btn.closest(".answer-item");
+    btn.addEventListener("click", () => removeAnswerOption(answerItem));
+  });
+
+  updateQuestionCount();
 }
 
 function updateQuestionCount() {
-    const existingCounter = document.getElementById('question-counter');
-    if (existingCounter) {
-        existingCounter.remove();
-    }
-    
-    if (questions.length > 0) {
-        const counter = document.createElement('div');
-        counter.id = 'question-counter';
-        counter.style.cssText = 'margin: 10px 0; padding: 10px; background: #e8f5e8; border-radius: 5px; font-weight: bold; color: #2d5f2d;';
-        counter.textContent = `📊 Nombre de questions créées : ${questions.length}`;
-        
-        const questionCreationScreen = document.getElementById('question-creation-screen');
-        const title = questionCreationScreen.querySelector('h2');
-        title.insertAdjacentElement('afterend', counter);
-    }
+  const existingCounter = document.getElementById("question-counter");
+  if (existingCounter) {
+    existingCounter.remove();
+  }
+
+  if (questions.length > 0) {
+    const counter = document.createElement("div");
+    counter.id = "question-counter";
+    counter.style.cssText =
+      "margin: 10px 0; padding: 10px; background: #e8f5e8; border-radius: 5px; font-weight: bold; color: #2d5f2d;";
+    counter.textContent = `📊 Nombre de questions créées : ${questions.length}`;
+
+    const questionCreationScreen = document.getElementById(
+      "question-creation-screen"
+    );
+    const title = questionCreationScreen.querySelector("h2");
+    title.insertAdjacentElement("afterend", counter);
+  }
 }
 
 questionForm.addEventListener('submit', async (e) => {
@@ -292,56 +307,55 @@ questionForm.addEventListener('submit', async (e) => {
         choix: answers
     };
 
-    questions.push(newQuestion);
-    console.log('✅ Nouvelle question créée avec succès:', newQuestion);
-    console.log('=== FIN DU DÉBOGAGE ===');
-    questionForm.classList.add('hidden');
-    questionSuccessMessage.classList.remove('hidden');
-    
-    updateQuestionCount();
+  questions.push(newQuestion);
+  console.log("✅ Nouvelle question créée avec succès:", newQuestion);
+  console.log("=== FIN DU DÉBOGAGE ===");
+  questionForm.classList.add("hidden");
+  questionSuccessMessage.classList.remove("hidden");
 
-    const response = await fetch('http://localhost:3000/question', {
-        method: 'POST',
-        headers: {
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify(
-            newQuestion
-        )
-        })
-        console.log(questions)
+  updateQuestionCount();
 
-    loadQuestions()
+  const response = await fetch("http://localhost:3000/question", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newQuestion),
+  });
+  console.log(questions);
+
+  loadQuestions();
 });
 
-showQuestionsBtn.addEventListener('click', () => {
-    showScreen(showQuestionScreen)
-    showQuestions.innerHTML = ''
-    questions.forEach(question => {
-        const div = document.createElement('div')
-        const titre = document.createElement('h1')
-        titre.textContent = question.label
-        const deleteBtn = document.createElement('button')
-        deleteBtn.textContent = 'X'
-        div.append(titre, deleteBtn)
-        showQuestions.append(div)
-        
-        deleteBtn.addEventListener('click', async () => {
-            const deletedQuestion = question.label
-            fetch(`http://localhost:3000/question/delete/${question._id}`, {
-                method: 'DELETE'
-            })
-            .then(console.log(deletedQuestion + ' bien supprimé'))
-            .catch(err=>console.log(err))
-            div.remove()
-        })
-})
-})
+showQuestionsBtn.addEventListener("click", () => {
+  showScreen(showQuestionScreen);
+  showQuestions.innerHTML = "";
+  questions.forEach((question) => {
+    const div = document.createElement("div");
+    div.className = "form_question";
+    const titre = document.createElement("h3");
+    titre.textContent = question.label;
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "X";
+    div.append(titre, deleteBtn);
+    showQuestions.append(div);
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadQuestions().then(() => {
-        updateQuestionCount();
+    deleteBtn.addEventListener("click", async () => {
+      const deletedQuestion = question.label;
+      fetch(`http://localhost:3000/question/delete/${question._id}`, {
+        method: "DELETE",
+      })
+        .then(console.log(deletedQuestion + " bien supprimé"))
+        .catch((err) => console.log(err));
+      div.remove();
     });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadQuestions().then(() => {
+    updateQuestionCount();
+  });
 });
 
 async function loadQuizzes() {
