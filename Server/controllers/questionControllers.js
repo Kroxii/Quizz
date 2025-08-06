@@ -32,9 +32,9 @@ exports.destroyQuestion = async function (req, res) {
     }
 }
 
-exports.updateQuestion = async function (req,res){
+exports.replaceQuestion = async function (req,res){
     try {
-      await Question.findByIdAndUpdate({_id :req.params._id},{$set: req.body},{returnDocument:"after"});
+      await Question.findByIdAndUpdate({_id :req.params._id},{$set: req.body});
       
     }catch(error){
         return res.status(404).json({error:"Not Found"})
