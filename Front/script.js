@@ -435,7 +435,7 @@ function displayQuizList() {
         quizItem.className = 'quiz-item';
         quizItem.style.cssText = 'border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 8px; cursor: pointer;';
         quizItem.innerHTML = `
-            <h3>${quiz.name}</h3>
+            <h3>${quiz.title}</h3>
             <p><strong>Description:</strong> ${quiz.description || 'Aucune description'}</p>
             <div class="quiz-meta">
                 <span class="theme-badge theme-${quiz.theme}">${quiz.theme}</span>
@@ -443,6 +443,19 @@ function displayQuizList() {
                 <span class="questions-count">${quiz.questions ? quiz.questions.length : 0} questions</span>
             </div>
         `;
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "X";
+        quizItem.append(deleteBtn);
+        
+        deleteBtn.addEventListener("click", async () => {
+            const deletedQuizz = quiz.title;
+            fetch(`http://localhost:3000/quizz/delete/${quiz._id}`, {
+                method: "DELETE",
+            })
+                .then(console.log(deletedQuizz + " bien supprimé"))
+                .catch((err) => console.log(err));
+            quizItem.remove();
+            })
         
         quizItem.addEventListener('click', () => {
             console.log('Quiz sélectionné:', quiz);

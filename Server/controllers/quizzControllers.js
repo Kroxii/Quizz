@@ -17,3 +17,12 @@ exports.createQuizz = async function (req, res) {
     throw error;
   }
 };
+
+exports.destroyQuizz = async function (req, res) {
+    try {
+        await Quizz.findOneAndDelete({_id: req.params.id })
+        res.end()
+    } catch (error) {
+        throw error
+    }
+}
