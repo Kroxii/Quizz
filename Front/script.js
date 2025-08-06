@@ -17,11 +17,15 @@ const quizCreationScreen = document.getElementById('quiz-creation-screen');
 const questionCreationScreen = document.getElementById('question-creation-screen');
 const quizList = document.getElementById('quiz-list');
 const questionForm = document.getElementById('question-form');
+const quizForm = document.getElementById('quiz-form');
+const quizSuccessMessage = document.getElementById('quiz-success-message');
+const availableQuestions = document.getElementById('available-questions');
 const addAnswerBtn = document.getElementById('add-answer-btn');
 const createAnotherQuestionBtn = document.getElementById('create-another-question-btn');
 const questionSuccessMessage = document.getElementById('question-success-message');
 let currentUser = null;
 let questions = [];
+let quizzes = [];
 
 
 async function loadQuestions() {
@@ -29,12 +33,26 @@ async function loadQuestions() {
         const response = await fetch('http://localhost:3000/question');
         if (response.ok) {
             questions = await response.json();
-            console.log('Questions chargées depuis question.json:', questions.length, 'questions');
+            console.log('Questions chargées depuis la DB:', questions.length, 'questions');
         } else {
-            throw new Error('Fichier question.json non trouvé');
+            throw new Error('Erreur lors du chargement des questions depuis la DB');
         }
     } catch (error) {
         console.warn('Impossible de charger question.json:', error.message);
+        
+        try {
+            const savedQuestions = localStorage.getItem('quiz-questions');
+            if (savedQuestions) {
+                questions = JSON.parse(savedQuestions);
+                console.log('Questions chargées depuis localStorage:', questions.length, 'questions');
+            } else {
+                questions = [];
+                console.log('Aucune question sauvegardée trouvée, initialisation avec un tableau vide');
+            }
+        } catch (localError) {
+            console.error('Erreur lors du chargement depuis localStorage:', localError);
+            questions = [];
+        }
     }
 }
 
@@ -44,9 +62,21 @@ function showScreen(screenToShow) {
     screenToShow.classList.add('active');
 }
 
+createQuizBtn.addEventListener('click', async () => {
+    await loadQuestions();
+    displayAvailableQuestions();
+    showScreen(quizCreationScreen);
+});
+
 createQuestionsBtn.addEventListener('click', async () => {
     showScreen(questionCreationScreen);
     updateQuestionCount();
+});
+
+selectQuizBtn.addEventListener('click', async () => {
+    await loadQuizzes();
+    displayQuizList();
+    showScreen(quizSelectionScreen);
 });
 
 backToStartBtn1.addEventListener('click', () => {
@@ -71,6 +101,16 @@ createAnotherQuestionBtn.addEventListener('click', () => {
     questionForm.classList.remove('hidden');
     resetQuestionForm();
 });
+
+const createAnotherQuizBtn = document.getElementById('create-another-quiz-btn');
+if (createAnotherQuizBtn) {
+    createAnotherQuizBtn.addEventListener('click', () => {
+        quizSuccessMessage.classList.add('hidden');
+        quizForm.classList.remove('hidden');
+        resetQuizForm();
+        displayAvailableQuestions();
+    });
+}
 
 addAnswerBtn.addEventListener('click', addAnswerOption);
 
@@ -205,7 +245,6 @@ questionForm.addEventListener('submit', async (e) => {
     console.log('- Niveau:', level);
     console.log('- Index réponse correcte:', correctAnswerIndex);
     
-    // Validation de base
     if (!questionText || questionText.trim() === '') {
         alert('Veuillez saisir une question.');
         console.log('❌ Erreur: Question vide');
@@ -285,36 +324,261 @@ questionForm.addEventListener('submit', async (e) => {
         )
         })
         console.log(questions)
-
-    loadQuestions()
 });
 
-showQuestionsBtn.addEventListener('click', () => {
+showQuestionsBtn.addEventListener('click', async () => {
     showScreen(showQuestionScreen)
-    showQuestions.innerHTML = ''
-    questions.forEach(question => {
-        const div = document.createElement('div')
-        const titre = document.createElement('h1')
-        titre.textContent = question.label
-        const deleteBtn = document.createElement('button')
-        deleteBtn.textContent = 'X'
-        div.append(titre, deleteBtn)
-        showQuestions.append(div)
-        
-        deleteBtn.addEventListener('click', async () => {
-            const deletedQuestion = question.label
-            fetch(`http://localhost:3000/question/delete/${question._id}`, {
-                method: 'DELETE'
-            })
-            .then(console.log(deletedQuestion + ' bien supprimé'))
-            .catch(err=>console.log(err))
-            div.remove()
-        })
-})
-})
+    showQuestions.innerHTML = '';
+    await loadQuestions();
+    
+    if (questions.length === 0) {
+        showQuestions.innerHTML = '<p>Aucune question disponible.</p>';
+        return;
+    }
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadQuestions().then(() => {
-        updateQuestionCount();
+    questions.forEach(question => {
+        const questionDiv = document.createElement('div');
+        questionDiv.style.cssText = 'border: 1px solid #ccc; margin: 10px; padding: 10px; border-radius: 5px;';
+        questionDiv.innerHTML = `
+            <h3>${question.label}</h3>
+            <p><strong>Thème:</strong> ${question.theme}</p>
+            <p><strong>Niveau:</strong> ${question.level}</p>
+            <div><strong>Réponses:</strong></div>
+            <ul>
+                ${question.choix.map(choix => `<li style="color: ${choix.good ? 'green' : 'black'}">${choix.label} ${choix.good ? '✓' : ''}</li>`).join('')}
+            </ul>
+            ${question._id ? `<button class="delete-btn" data-id="${question._id}">Supprimer</button>` : ''}
+        `;
+        showQuestions.appendChild(questionDiv);
     });
+
+    const deleteButtons = showQuestions.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const questionId = e.target.getAttribute('data-id');
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette question ?')) {
+                try {
+                    const response = await fetch(`/localhost:3000/quizz`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        console.log('Question supprimée avec succès');
+                        await loadQuestions();
+                        showQuestionsBtn.click();
+                    } else {
+                        console.error('Erreur lors de la suppression');
+                        alert('Erreur lors de la suppression de la question');
+                    }
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors de la suppression de la question');
+                }
+            }
+        });
+    });
+});
+
+async function loadQuizzes() {
+    try {
+        const response = await fetch('http://localhost:3000/quizz');
+        if (response.ok) {
+            quizzes = await response.json();
+            console.log('Quiz chargés depuis la DB:', quizzes.length, 'quiz');
+        } else {
+            throw new Error('Erreur lors du chargement des quiz depuis la DB');
+        }
+    } catch (error) {
+        console.warn('Impossible de charger les quiz depuis la DB:', error.message);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadQuestions();
+    await loadQuizzes();
+    updateQuestionCount();
+    
+    if (availableQuestions) {
+        displayAvailableQuestions();
+    }
+});
+
+function displayAvailableQuestions() {
+    if (!availableQuestions) return;
+
+    availableQuestions.innerHTML = '';
+
+    if (questions.length === 0) {
+        availableQuestions.innerHTML = '<p>Aucune question disponible pour le moment. Créez d\'abord des questions.</p>';
+        return;
+    }
+
+    questions.forEach((question, index) => {
+        const questionItem = document.createElement('div');
+        questionItem.className = 'question-item';
+        questionItem.innerHTML = `
+            <label class="question-checkbox">
+                <input type="checkbox" name="selected-questions" value="${index}">
+                <div class="question-text">${question.label}</div>
+                <div class="question-meta">
+                    <span class="theme-badge theme-${question.theme}">${question.theme}</span>
+                    <span class="level-badge level-${question.level}">${question.level}</span>
+                    <span class="answers-count">${question.choix.length}</span>
+                </div>
+            </div>
+        </label>
+    `;
+    availableQuestions.appendChild(questionItem);
+    });
+}
+
+function displayQuizList() {
+    if (!quizList) return;
+
+    quizList.innerHTML = '';
+
+    if (quizzes.length === 0) {
+        quizList.innerHTML = '<p>Aucun quiz disponible pour le moment. Créez d\'abord des quiz.</p>';
+        return;
+    }
+
+    quizzes.forEach((quiz, index) => {
+        const quizItem = document.createElement('div');
+        quizItem.className = 'quiz-item';
+        quizItem.style.cssText = 'border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 8px; cursor: pointer;';
+        quizItem.innerHTML = `
+            <h3>${quiz.name}</h3>
+            <p><strong>Description:</strong> ${quiz.description || 'Aucune description'}</p>
+            <div class="quiz-meta">
+                <span class="theme-badge theme-${quiz.theme}">${quiz.theme}</span>
+                <span class="level-badge level-${quiz.level}">${quiz.level}</span>
+                <span class="questions-count">${quiz.questions ? quiz.questions.length : 0} questions</span>
+            </div>
+        `;
+        
+        quizItem.addEventListener('click', () => {
+            console.log('Quiz sélectionné:', quiz);
+        });
+        
+        quizList.appendChild(quizItem);
+    });
+}
+
+function resetQuizForm() {
+    if (!quizForm) return;
+
+    quizForm.reset();
+    const checkboxes = document.querySelectorAll('input[name="selected-questions"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+}
+
+async function saveQuizToDatabase(quizData) {
+    try {
+        const response = await fetch('http://localhost:3000/quizz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(quizData)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        console.log('Quiz sauvegardé en base de données:', result);
+        return result;
+        
+    } catch (error) {
+        console.error('Erreur lors de la sauvegarde en base de données:', error);
+        console.log('Fallback: sauvegarde en localStorage');
+        throw error;
+    }
+}
+
+quizForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    console.log('=== DÉBUT DE LA CRÉATION DU QUIZ ===');
+
+    const formData = new FormData(quizForm);
+    const quizName = formData.get('quiz-name');
+    const quizDescription = formData.get('quiz-description') || '';
+    const quizTheme = formData.get('quiz-theme');
+    const quizLevel = formData.get('quiz-level');
+
+    if (!quizName || quizName.trim() === '') {
+        alert('Veuillez saisir un nom pour le quiz.');
+        return;
+    }
+    
+    if (!quizTheme || quizTheme === '') {
+        alert('Veuillez sélectionner un thème.');
+        return;
+    }
+    
+    if (!quizLevel || quizLevel === '') {
+        alert('Veuillez sélectionner un niveau.');
+        return;
+    }
+    const selectedQuestions = [];
+    const checkboxes = document.querySelectorAll('input[name="selected-questions"]:checked');
+
+
+    if (checkboxes.length === 0) {
+        alert('Veuillez sélectionner au moins une question pour le quiz.');
+        return;
+    }
+    
+    checkboxes.forEach(checkbox => {
+        const questionIndex = parseInt(checkbox.value);
+        selectedQuestions.push(questions[questionIndex]);
+    });
+
+    const newQuiz = {
+        name: quizName.trim(),
+        description: quizDescription.trim(),
+        theme: quizTheme,
+        level: quizLevel,
+        questions: selectedQuestions
+    };
+
+console.log('Nouveau quiz créé:', newQuiz);
+console.log(`- Nom: ${newQuiz.name}`);
+console.log(`- Thème: ${newQuiz.theme}`);
+console.log(`- Niveau: ${newQuiz.level}`);
+console.log(`- Nombre de questions: ${selectedQuestions.length}`);
+
+try {
+        const result = await saveQuizToDatabase(newQuiz);
+        console.log('Quiz sauvegardé en base de données avec succès');
+        
+        // Recharger les quiz depuis la DB
+        await loadQuizzes();
+        
+        quizForm.classList.add('hidden');
+        quizSuccessMessage.classList.remove('hidden');
+        
+    } catch (error) {
+        console.warn('Échec de la sauvegarde en base de données, sauvegarde en localStorage');
+
+        newQuiz.id = Date.now();
+        quizzes.push(newQuiz);
+    
+        try {
+            localStorage.setItem('quiz-collection', JSON.stringify(quizzes));
+            console.log('Quiz sauvegardé dans localStorage');
+            
+            quizForm.classList.add('hidden');
+            quizSuccessMessage.classList.remove('hidden');
+        } catch (localError) {
+            console.error('Erreur lors de la sauvegarde dans localStorage:', localError);
+            alert('Erreur lors de la sauvegarde du quiz. Veuillez réessayer.');
+            return;
+        }
+    }
+    
+    console.log('=== FIN DE LA CRÉATION DU QUIZ ===');
 });

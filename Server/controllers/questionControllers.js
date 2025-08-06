@@ -8,6 +8,10 @@ exports.showQuestion = async function (req, res) {
     }
 }
 
+exports.getQuestion = (req,res)=> {
+    
+
+}
 exports.createQuestion = async function (req, res) {
     try {
         let newQuestion = new Question(req.body)
