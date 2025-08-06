@@ -35,6 +35,67 @@
             <button id="back-to-start" class="btn btn-secondary">Retour</button>
          </div>
 
+        <!-- Écran de création de quiz -->
+        <div id="quiz-creation-screen" class="screen">
+            <h2>Créer un nouveau quiz</h2>
+            <form id="quiz-form" class="quiz-form">
+                <div class="form-group">
+                    <label for="quiz-name">Nom du quiz :</label>
+                    <input type="text" id="quiz-name" name="quiz-name" placeholder="Entrez le nom du quiz..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quiz-description">Description :</label>
+                    <textarea id="quiz-description" name="quiz-description" rows="3" placeholder="Description du quiz (optionnel)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="quiz-theme">Thème principal :</label>
+                    <select id="quiz-theme" name="quiz-theme" required>
+                        <option value="">Sélectionnez un thème</option>
+                        <option value="vocabulaire">Vocabulaire</option>
+                        <option value="grammaire">Grammaire</option>
+                        <option value="conjugaison">Conjugaison</option>
+                        <option value="culture">Culture générale</option>
+                        <option value="mathematiques">Mathématiques</option>
+                        <option value="sciences">Sciences</option>
+                        <option value="histoire">Histoire</option>
+                        <option value="geographie">Géographie</option>
+                        <option value="mixte">Mixte</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="quiz-level">Niveau de difficulté :</label>
+                    <select id="quiz-level" name="quiz-level" required>
+                        <option value="">Sélectionnez un niveau</option>
+                        <option value="facile">Facile</option>
+                        <option value="moyen">Moyen</option>
+                        <option value="difficile">Difficile</option>
+                        <option value="mixte">Mixte</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Sélection des questions :</label>
+                    <div id="available-questions" class="questions-list">
+                    </div>
+                    <p class="help-text">Cochez les questions que vous souhaitez inclure dans ce quiz</p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Créer le quiz</button>
+                    <button type="button" id="back-to-start-from-quiz" class="btn btn-secondary">Retour</button>
+                </div>
+            </form>
+
+            <div id="quiz-success-message" class="success-message hidden">
+                <p>Quiz créé avec succès !</p>
+                <button id="create-another-quiz-btn" class="btn btn-primary">Créer un autre quiz</button>
+                <button id="back-to-start-after-quiz-creation" class="btn btn-secondary">Retour à l'accueil</button>
+            </div>
+        </div>
+
         <!-- Écran de sélection de questionnaire -->
     <div id="quiz-selection-screen" class="screen">
         <h2>Sélectionner un questionnaire</h2>
