@@ -60,7 +60,13 @@ createQuestionsBtn.addEventListener('click', async () => {
 });
 
 backToStartBtn1.addEventListener('click', () => {
-    showScreen(startScreen);
+    showScreen(startScreen)
+    });
+
+selectQuizBtn.addEventListener('click', async () => {
+    await loadQuizzes();
+    displayQuizList();
+    showScreen(quizSelectionScreen);
 });
 
 backToStartBtn.addEventListener('click', () => {
