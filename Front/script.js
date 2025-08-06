@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const loginBtn = document.getElementById('login-btn');
 const createQuizBtn = document.getElementById('create-quiz-btn');
 const createQuestionsBtn = document.getElementById('create-questions-btn');
@@ -22,72 +21,12 @@ const availableQuestions = document.getElementById('available-questions');
 const addAnswerBtn = document.getElementById('add-answer-btn');
 const createAnotherQuestionBtn = document.getElementById('create-another-question-btn');
 const questionSuccessMessage = document.getElementById('question-success-message');
-=======
-const loginBtn = document.getElementById("login-btn");
-const createQuizBtn = document.getElementById("create-quiz-btn");
-const createQuestionsBtn = document.getElementById("create-questions-btn");
-const selectQuizBtn = document.getElementById("select-quiz-btn");
-const showQuestionsBtn = document.getElementById("show-questions-btn");
-const showQuestionScreen = document.getElementById("show-questions-screen");
-let showQuestions = document.getElementById("show-questions");
-const backToStartBtn1 = document.getElementById("back-to-start");
-const backToStartBtn = document.getElementById("back-to-start-btn");
-const backToStartFromQuestions = document.getElementById(
-  "back-to-start-from-questions"
-);
-const backToStartAfterCreation = document.getElementById(
-  "back-to-start-after-creation"
-);
-const loginText = document.getElementById("login-text");
-const userName = document.getElementById("user-name");
-const startScreen = document.getElementById("start-screen");
-const quizSelectionScreen = document.getElementById("quiz-selection-screen");
-const quizCreationScreen = document.getElementById("quiz-creation-screen");
-const questionCreationScreen = document.getElementById(
-  "question-creation-screen"
-);
-const quizList = document.getElementById("quiz-list");
-const questionForm = document.getElementById("question-form");
-const addAnswerBtn = document.getElementById("add-answer-btn");
-const createAnotherQuestionBtn = document.getElementById(
-  "create-another-question-btn"
-);
-const questionSuccessMessage = document.getElementById(
-  "question-success-message"
-);
->>>>>>> 7a242f1c712148d0240c05671c6af6e78996a2fc
-const loginBtn = document.getElementById('login-btn');
-const createQuizBtn = document.getElementById('create-quiz-btn');
-const createQuestionsBtn = document.getElementById('create-questions-btn');
-const selectQuizBtn = document.getElementById('select-quiz-btn');
-const showQuestionsBtn = document.getElementById('show-questions-btn');
-const showQuestionScreen = document.getElementById('show-questions-screen')
-let showQuestions = document.getElementById('show-questions')
-const backToStartBtn1 = document.getElementById('back-to-start');
-const backToStartBtn = document.getElementById('back-to-start-btn');
-const backToStartFromQuestions = document.getElementById('back-to-start-from-questions');
-const backToStartAfterCreation = document.getElementById('back-to-start-after-creation');
-const loginText = document.getElementById('login-text');
-const userName = document.getElementById('user-name');
-const startScreen = document.getElementById('start-screen');
-const quizSelectionScreen = document.getElementById('quiz-selection-screen');
-const quizCreationScreen = document.getElementById('quiz-creation-screen');
-const questionCreationScreen = document.getElementById('question-creation-screen');
-const quizList = document.getElementById('quiz-list');
-const questionForm = document.getElementById('question-form');
-const quizForm = document.getElementById('quiz-form');
-const quizSuccessMessage = document.getElementById('quiz-success-message');
-const availableQuestions = document.getElementById('available-questions');
-const addAnswerBtn = document.getElementById('add-answer-btn');
-const createAnotherQuestionBtn = document.getElementById('create-another-question-btn');
-const questionSuccessMessage = document.getElementById('question-success-message');
 let currentUser = null;
 let questions = [];
 let quizzes = [];
 
 
 async function loadQuestions() {
-<<<<<<< HEAD
     try {
         const response = await fetch('http://localhost:3000/question');
         if (response.ok) {
@@ -107,7 +46,6 @@ function showScreen(screenToShow) {
     screenToShow.classList.add('active');
 }
 
-<<<<<<< HEAD
 createQuizBtn.addEventListener('click', async () => {
     await loadQuestions();
     displayAvailableQuestions();
@@ -131,7 +69,8 @@ selectQuizBtn.addEventListener('click', async () => {
 
 backToStartBtn.addEventListener('click', () => {
     showScreen(startScreen);
-=======
+});
+
 createQuestionsBtn.addEventListener("click", async () => {
   showScreen(questionCreationScreen);
   updateQuestionCount();
@@ -139,7 +78,6 @@ createQuestionsBtn.addEventListener("click", async () => {
 
 backToStartBtn1.addEventListener("click", () => {
   showScreen(startScreen);
->>>>>>> 7a242f1c712148d0240c05671c6af6e78996a2fc
 });
 
 backToStartBtn.addEventListener("click", () => {
@@ -155,7 +93,6 @@ backToStartAfterCreation.addEventListener("click", () => {
   resetQuestionForm();
 });
 
-<<<<<<< HEAD
 createAnotherQuestionBtn.addEventListener("click", () => {
   questionSuccessMessage.classList.add("hidden");
   questionForm.classList.remove("hidden");
@@ -173,7 +110,6 @@ if (createAnotherQuizBtn) {
 }
 
 addAnswerBtn.addEventListener('click', addAnswerOption);
-=======
 createAnotherQuestionBtn.addEventListener("click", () => {
   questionSuccessMessage.classList.add("hidden");
   questionForm.classList.remove("hidden");
@@ -181,7 +117,6 @@ createAnotherQuestionBtn.addEventListener("click", () => {
 });
 
 addAnswerBtn.addEventListener("click", addAnswerOption);
->>>>>>> 7a242f1c712148d0240c05671c6af6e78996a2fc
 addAnswerBtn.addEventListener("click", addAnswerOption);
 
 function addAnswerOption() {
