@@ -23,6 +23,6 @@ module.exports = (req, res) => {
   if (error) {
     res.status(400).json({ error: error.detail[0].message });
   } else {
-    res.status(200).json({ message: "Question bien crée !", data: value });
+    res.status(200).json({ message: "Question bien créée !", data: value });
   }
 };

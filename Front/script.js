@@ -98,16 +98,6 @@ if (createAnotherQuizBtn) {
     });
 }
 
-const createAnotherQuizBtn = document.getElementById('create-another-quiz-btn');
-if (createAnotherQuizBtn) {
-    createAnotherQuizBtn.addEventListener('click', () => {
-        quizSuccessMessage.classList.add('hidden');
-        quizForm.classList.remove('hidden');
-        resetQuizForm();
-        displayAvailableQuestions();
-    });
-}
-
 addAnswerBtn.addEventListener("click", addAnswerOption);
 
 function addAnswerOption() {
@@ -455,6 +445,7 @@ function resetQuizForm() {
 
 async function saveQuizToDatabase(quizData) {
     try {
+        console.log(quizData)
         const response = await fetch('http://localhost:3000/quizz', {
             method: 'POST',
             headers: {
@@ -513,11 +504,11 @@ quizForm.addEventListener('submit', async (e) => {
     
     checkboxes.forEach(checkbox => {
         const questionIndex = parseInt(checkbox.value);
-        selectedQuestions.push(questions[questionIndex]);
+        selectedQuestions.push(questions[questionIndex]._id)
     });
 
     const newQuiz = {
-        name: quizName.trim(),
+        title: quizName.trim(),
         description: quizDescription.trim(),
         theme: quizTheme,
         level: quizLevel,
