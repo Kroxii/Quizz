@@ -643,18 +643,6 @@ function displayQuizList() {
     return;
   }
 
-<<<<<<< HEAD
-  quizzes.forEach((quiz, index) => {
-    const quizItem = document.createElement("div");
-    quizItem.className = "quiz-item";
-    quizItem.style.cssText =
-      "border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 8px; cursor: pointer;";
-    quizItem.innerHTML = `
-            <h3>${quiz.name}</h3>
-            <p><strong>Description:</strong> ${
-              quiz.description || "Aucune description"
-            }</p>
-=======
     quizzes.forEach((quiz, index) => {
         const quizItem = document.createElement('div');
         quizItem.className = 'quiz-item';
@@ -662,7 +650,6 @@ function displayQuizList() {
         quizItem.innerHTML = `
             <h3>${quiz.title}</h3>
             <p><strong>Description:</strong> ${quiz.description || 'Aucune description'}</p>
->>>>>>> 7c60946d6afb4458e921a6ae5b246775fe25b95d
             <div class="quiz-meta">
                 <span class="theme-badge theme-${quiz.theme}">${
       quiz.theme
@@ -675,11 +662,6 @@ function displayQuizList() {
                 } questions</span>
             </div>
         `;
-<<<<<<< HEAD
-
-    quizItem.addEventListener("click", () => {
-      console.log("Quiz sélectionné:", quiz);
-=======
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "X";
         quizItem.append(deleteBtn);
@@ -699,7 +681,6 @@ function displayQuizList() {
         });
         
         quizList.appendChild(quizItem);
->>>>>>> 7c60946d6afb4458e921a6ae5b246775fe25b95d
     });
 }
 
