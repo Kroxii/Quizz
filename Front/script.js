@@ -410,6 +410,10 @@ showQuestionsBtn.addEventListener("click", () => {
 });
 // ! Maintenant rajouter le faire que c'est as envoyer l'objet modifier et le rec dans la DB
 
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
   loadQuestions().then(() => {
     updateQuestionCount();
