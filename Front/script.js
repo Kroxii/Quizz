@@ -368,7 +368,6 @@ showQuestionsBtn.addEventListener("click", () => {
     const questionLabel = document.getElementById("label");
     const questionTheme = document.getElementById("theme");
     const questionLevel = document.getElementById("level");
-    console.log(questionLevel);
     const answersContainer = document.getElementById("answers");
     const questionModifyForm = document.getElementById("questionModifyForm");
 
@@ -397,7 +396,7 @@ showQuestionsBtn.addEventListener("click", () => {
                   <input
                     type="radio"
                     name="correct-answer"
-                    class="correct-radio"
+                    value=${question.choix.indexOf(choi)}
                     ${choi.good ? "checked" : ""}
                     required
                   />
@@ -416,17 +415,13 @@ showQuestionsBtn.addEventListener("click", () => {
         const theme = formData.get("question-theme");
         const level = formData.get("question-level");
         const correctAnswerIndex = formData.get("correct-answer");
+        console.log(correctAnswerIndex)
         const answerTexts = questionModifyForm.querySelectorAll(".answer-text");
         const answers = [];
         const correctIndex =
           correctAnswerIndex !== undefined ? parseInt(correctAnswerIndex) : -1;
 
         const correctRadios = document.querySelectorAll(".correct-radio");
-
-        console.log("Données du formulaire:");
-        console.log("- Question:", questionText);
-        console.log("- Thème:", theme);
-        console.log("- Niveau:", level);
         console.log("- Index réponse correcte:", correctAnswerIndex);
 
         answerTexts.forEach((input, index) => {
@@ -445,9 +440,6 @@ showQuestionsBtn.addEventListener("click", () => {
             );
           }
         });
-
-        console.log(answers + "console.log 2 ");
-        console.log(answerTexts);
 
         const newQuestion = {
           label: questionText.trim(),
