@@ -1,180 +1,330 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz Interactif</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <!-- Bouton de connexion -->
     <div class="login-container">
-        <button id="login-btn" class="login-btn">
-            <span id="login-text">Se connecter</span>
-            <span id="user-name" class="user-name hidden"></span>
-        </button>
+      <button id="login-btn" class="login-btn">
+        <span id="login-text">Se connecter</span>
+        <span id="user-name" class="user-name hidden"></span>
+      </button>
     </div>
 
     <div class="container">
-        <!-- Écran de démarrage -->
-        <div id="start-screen" class="screen active">
-            <h1>Quiz Interactif</h1>
-            <p>Testez vos connaissances avec notre quiz !</p>
-            <div class="quiz-options">
-                <button id="create-quiz-btn" class="btn btn-primary">Créer un quiz</button>
-                <button id="create-questions-btn" class="btn btn-secondary">Créer des questions</button>
-                <button id="select-quiz-btn" class="btn btn-third">Sélectionner un quiz</button>
-                <button id="show-questions-btn" class="btn btn-danger hidden">Voir les questions</button>
-            </div>
+      <!-- Écran de démarrage -->
+      <div id="start-screen" class="screen active">
+        <h1>Quiz Interactif</h1>
+        <p>Testez vos connaissances avec notre quiz !</p>
+        <div class="quiz-options">
+          <button id="create-quiz-btn" class="btn btn-primary">
+            Créer un quiz
+          </button>
+          <button id="create-questions-btn" class="btn btn-secondary">
+            Créer des questions
+          </button>
+          <button id="select-quiz-btn" class="btn btn-third">
+            Sélectionner un quiz
+          </button>
+          <button id="show-questions-btn" class="btn btn-danger hidden">
+            Voir les questions
+          </button>
         </div>
+      </div>
 
-        <!-- Div contenant l'affichage conditionnel des questions -->
-         <div id="show-questions-screen" class="screen">
-            <div id="show-questions">
-            </div>
-            <button id="back-to-start" class="btn btn-secondary">Retour</button>
-         </div>
+      <!-- Div contenant l'affichage conditionnel des questions -->
+      <div id="show-questions-screen" class="screen">
+        <div id="show-questions"></div>
+        <button id="back-to-start" class="btn btn-secondary">Retour</button>
+      </div>
 
-        <!-- Écran de création de quiz -->
-        <div id="quiz-creation-screen" class="screen">
-            <h2>Créer un nouveau quiz</h2>
-            <form id="quiz-form" class="quiz-form">
-                <div class="form-group">
-                    <label for="quiz-name">Nom du quiz :</label>
-                    <input type="text" id="quiz-name" name="quiz-name" placeholder="Entrez le nom du quiz..." required>
-                </div>
+      <!-- Écran de création de quiz -->
+      <div id="quiz-creation-screen" class="screen">
+        <h2>Créer un nouveau quiz</h2>
+        <form id="quiz-form" class="quiz-form">
+          <div class="form-group">
+            <label for="quiz-name">Nom du quiz :</label>
+            <input
+              type="text"
+              id="quiz-name"
+              name="quiz-name"
+              placeholder="Entrez le nom du quiz..."
+              required
+            />
+          </div>
 
-                <div class="form-group">
-                    <label for="quiz-description">Description :</label>
-                    <textarea id="quiz-description" name="quiz-description" rows="3" placeholder="Description du quiz (optionnel)"></textarea>
-                </div>
+          <div class="form-group">
+            <label for="quiz-description">Description :</label>
+            <textarea
+              id="quiz-description"
+              name="quiz-description"
+              rows="3"
+              placeholder="Description du quiz (optionnel)"
+            ></textarea>
+          </div>
 
-                <div class="form-group">
-                    <label for="quiz-theme">Thème principal :</label>
-                    <select id="quiz-theme" name="quiz-theme" required>
-                        <option value="">Sélectionnez un thème</option>
-                        <option value="vocabulaire">Vocabulaire</option>
-                        <option value="grammaire">Grammaire</option>
-                        <option value="conjugaison">Conjugaison</option>
-                        <option value="culture">Culture générale</option>
-                        <option value="mathematiques">Mathématiques</option>
-                        <option value="sciences">Sciences</option>
-                        <option value="histoire">Histoire</option>
-                        <option value="geographie">Géographie</option>
-                        <option value="mixte">Mixte</option>
-                    </select>
-                </div>
+          <div class="form-group">
+            <label for="quiz-theme">Thème principal :</label>
+            <select id="quiz-theme" name="quiz-theme" required>
+              <option value="">Sélectionnez un thème</option>
+              <option value="vocabulaire">Vocabulaire</option>
+              <option value="grammaire">Grammaire</option>
+              <option value="conjugaison">Conjugaison</option>
+              <option value="culture">Culture générale</option>
+              <option value="mathematiques">Mathématiques</option>
+              <option value="sciences">Sciences</option>
+              <option value="histoire">Histoire</option>
+              <option value="geographie">Géographie</option>
+              <option value="mixte">Mixte</option>
+            </select>
+          </div>
 
-                <div class="form-group">
-                    <label for="quiz-level">Niveau de difficulté :</label>
-                    <select id="quiz-level" name="quiz-level" required>
-                        <option value="">Sélectionnez un niveau</option>
-                        <option value="facile">Facile</option>
-                        <option value="moyen">Moyen</option>
-                        <option value="difficile">Difficile</option>
-                        <option value="mixte">Mixte</option>
-                    </select>
-                </div>
+          <div class="form-group">
+            <label for="quiz-level">Niveau de difficulté :</label>
+            <select id="quiz-level" name="quiz-level" required>
+              <option value="">Sélectionnez un niveau</option>
+              <option value="facile">Facile</option>
+              <option value="moyen">Moyen</option>
+              <option value="difficile">Difficile</option>
+              <option value="mixte">Mixte</option>
+            </select>
+          </div>
 
-                <div class="form-group">
-                    <label>Sélection des questions :</label>
-                    <div id="available-questions" class="questions-list">
-                    </div>
-                    <p class="help-text">Cochez les questions que vous souhaitez inclure dans ce quiz</p>
-                </div>
+          <div class="form-group">
+            <label>Sélection des questions :</label>
+            <div id="available-questions" class="questions-list"></div>
+            <p class="help-text">
+              Cochez les questions que vous souhaitez inclure dans ce quiz
+            </p>
+          </div>
 
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Créer le quiz</button>
-                    <button type="button" id="back-to-start-from-quiz" class="btn btn-secondary">Retour</button>
-                </div>
-            </form>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Créer le quiz</button>
+            <button
+              type="button"
+              id="back-to-start-from-quiz"
+              class="btn btn-secondary"
+            >
+              Retour
+            </button>
+          </div>
+        </form>
 
-            <div id="quiz-success-message" class="success-message hidden">
-                <p>Quiz créé avec succès !</p>
-                <button id="create-another-quiz-btn" class="btn btn-primary">Créer un autre quiz</button>
-                <button id="back-to-start-after-quiz-creation" class="btn btn-secondary">Retour à l'accueil</button>
-            </div>
+        <div id="quiz-success-message" class="success-message hidden">
+          <p>Quiz créé avec succès !</p>
+          <button id="create-another-quiz-btn" class="btn btn-primary">
+            Créer un autre quiz
+          </button>
+          <button
+            id="back-to-start-after-quiz-creation"
+            class="btn btn-secondary"
+          >
+            Retour à l'accueil
+          </button>
         </div>
+      </div>
 
-        <!-- Écran de sélection de questionnaire -->
-    <div id="quiz-selection-screen" class="screen">
+      <!-- Écran de sélection de questionnaire -->
+      <div id="quiz-selection-screen" class="screen">
         <h2>Sélectionner un questionnaire</h2>
         <div id="quiz-list" class="quiz-list">
-                <!-- Les questionnaires seront listés ici -->
+          <!-- Les questionnaires seront listés ici -->
         </div>
         <button id="back-to-start-btn" class="btn btn-secondary">Retour</button>
-    </div>
+      </div>
 
-    <div id="question-creation-screen" class="screen">
+      <div id="question-creation-screen" class="screen">
         <h2>Créer une nouvelle question</h2>
         <form id="question-form" class="question-form">
-            <div class="form-group">
-                <label for="question-text">Question :</label>
-                <textarea id="question-text" name="question-text" rows="3" placeholder="Saisissez votre question..." required></textarea>
-    </div>
+          <div class="form-group">
+            <label for="question-text">Question :</label>
+            <textarea
+              id="question-text"
+              name="question-text"
+              rows="3"
+              placeholder="Saisissez votre question..."
+              required
+            ></textarea>
+          </div>
 
-    <div class="form-group">
-        <label for="question-theme">Thème :</label>
-        <select id="question-theme" name="question-theme" required>
-            <option value="">Sélectionnez un thème</option>
-            <option value="vocabulaire">Vocabulaire</option>
-            <option value="grammaire">Grammaire</option>
-            <option value="conjugaison">Conjugaison</option>
-            <option value="culture">Culture générale</option>
-            <option value="mathematiques">Mathématiques</option>
-            <option value="sciences">Sciences</option>
-            <option value="histoire">Histoire</option>
-            <option value="geographie">Géographie</option>
-        </select>
-    </div>
+          <div class="form-group">
+            <label for="question-theme">Thème :</label>
+            <select id="question-theme" name="question-theme" required>
+              <option value="">Sélectionnez un thème</option>
+              <option value="vocabulaire">Vocabulaire</option>
+              <option value="grammaire">Grammaire</option>
+              <option value="conjugaison">Conjugaison</option>
+              <option value="culture">Culture générale</option>
+              <option value="mathematiques">Mathématiques</option>
+              <option value="sciences">Sciences</option>
+              <option value="histoire">Histoire</option>
+              <option value="geographie">Géographie</option>
+            </select>
+          </div>
 
-    <div class="form-group">
-        <label for="question-level">Niveau :</label>
-        <select id="question-level" name="question-level" required>
-            <option value="">Sélectionnez un niveau</option>
-            <option value="facile">Facile</option>
-            <option value="moyen">Moyen</option>
-            <option value="difficile">Difficile</option>
-        </select>
-    </div>
+          <div class="form-group">
+            <label for="question-level">Niveau :</label>
+            <select id="question-level" name="question-level" required>
+              <option value="">Sélectionnez un niveau</option>
+              <option value="facile">Facile</option>
+              <option value="moyen">Moyen</option>
+              <option value="difficile">Difficile</option>
+            </select>
+          </div>
 
-    <div class="form-group">
-                    <label>Réponses :</label>
-                    <div id="answers-container">
-                        <div class="answer-item">
-                            <input type="text" class="answer-text" placeholder="Réponse 1" required>
-                            <label class="correct-answer">
-                                <input type="radio" name="correct-answer" value="0" required>
-                                Correct
-                            </label>
-                            <button type="button" class="remove-answer-btn" style="display: none;">✕</button>
-                        </div>
-                        <div class="answer-item">
-                            <input type="text" class="answer-text" placeholder="Réponse 2" required>
-                            <label class="correct-answer">
-                                <input type="radio" name="correct-answer" value="1">
-                                Correct
-                            </label>
-                            <button type="button" class="remove-answer-btn" style="display: none;">✕</button>
-                        </div>
-                    </div>
-                    <button type="button" id="add-answer-btn" class="btn btn-secondary">Ajouter une réponse</button>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Créer la question</button>
-                    <button type="button" id="back-to-start-from-questions" class="btn btn-secondary">Retour</button>
-                </div>
-            </form>
-
-            <div id="question-success-message" class="success-message hidden">
-                <p>Question créée avec succès !</p>
-                <button id="create-another-question-btn" class="btn btn-primary">Créer une autre question</button>
-                <button id="back-to-start-after-creation" class="btn btn-secondary">Retour à l'accueil</button>
+          <div class="form-group">
+            <label>Réponses :</label>
+            <div id="answers-container">
+              <div class="answer-item">
+                <input
+                  type="text"
+                  class="answer-text"
+                  placeholder="Réponse 1"
+                  required
+                />
+                <label class="correct-answer">
+                  <input
+                    type="radio"
+                    name="correct-answer"
+                    value="0"
+                    required
+                  />
+                  Correct
+                </label>
+                <button
+                  type="button"
+                  class="remove-answer-btn"
+                  style="display: none"
+                >
+                  ✕
+                </button>
+              </div>
+              <div class="answer-item">
+                <input
+                  type="text"
+                  class="answer-text"
+                  placeholder="Réponse 2"
+                  required
+                />
+                <label class="correct-answer">
+                  <input type="radio" name="correct-answer" value="1" />
+                  Correct
+                </label>
+                <button
+                  type="button"
+                  class="remove-answer-btn"
+                  style="display: none"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
-        </div>
-            
+            <button type="button" id="add-answer-btn" class="btn btn-secondary">
+              Ajouter une réponse
+            </button>
+          </div>
 
-    <script src="script.js"></script>
-</body>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              Créer la question
+            </button>
+            <button
+              type="button"
+              id="back-to-start-from-questions"
+              class="btn btn-secondary"
+            >
+              Retour
+            </button>
+          </div>
+        </form>
+
+        <div id="question-success-message" class="success-message hidden">
+          <p>Question créée avec succès !</p>
+          <button id="create-another-question-btn" class="btn btn-primary">
+            Créer une autre question
+          </button>
+          <button id="back-to-start-after-creation" class="btn btn-secondary">
+            Retour à l'accueil
+          </button>
+        </div>
+      </div>
+
+      <!-- ******************************************    Update  Question    ******************************************************************-->
+
+      <div id="question-modif-screen" class="screen">
+        <h2>Modifier une question</h2>
+        <form id="questionModifyForm" class="question-form">
+          <div class="form-group">
+            <label for="label">Question :</label>
+            <textarea
+              id="label"
+              name="question-text"
+              rows="3"
+              placeholder="Saisissez votre question..."
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="theme">Thème :</label>
+            <select id="theme" name="question-theme" required>
+              <option value="">Sélectionnez un thème</option>
+              <option value="vocabulaire">Vocabulaire</option>
+              <option value="grammaire">Grammaire</option>
+              <option value="conjugaison">Conjugaison</option>
+              <option value="culture et politesse">culture et politesse</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="level">Niveau :</label>
+            <select id="level" name="question-level" required>
+              <option value="">Sélectionnez un niveau</option>
+              <option value="A1">A1</option>
+              <option value="A2">A2</option>
+              <option value="B1">B1</option>
+              <option value="B2">B2</option>
+              <option value="C1">C1</option>
+              <option value="C2">C2</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Réponses :</label>
+             <div id="answers">
+          </div> 
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              Modifer la question
+            </button>
+            <button
+              type="button"
+              id="back-to-start-from-questions"
+              class="btn btn-secondary"
+            >
+              Retour
+            </button>
+          </div>
+        </form>
+
+        <div id="question-success-message" class="success-message hidden">
+          <!-- <p>Question créée avec succès !</p>
+          <button id="create-another-question-btn" class="btn btn-primary">
+            Créer une autre question
+          </button> -->
+          <button id="back-to-start-after-creation" class="btn btn-secondary">
+            Retour à l'accueil
+          </button>
+        </div>
+      </div>
+      <!-- ******************************************    Update  Question    ******************************************************************-->
+
+      <script src="script.js"></script>
+    </div>
+  </body>
 </html>
