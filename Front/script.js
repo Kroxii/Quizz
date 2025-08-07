@@ -3,16 +3,19 @@ const createQuizBtn = document.getElementById('create-quiz-btn');
 const createQuestionsBtn = document.getElementById('create-questions-btn');
 const selectQuizBtn = document.getElementById('select-quiz-btn');
 const showQuestionsBtn = document.getElementById('show-questions-btn');
-const showQuestions = document.getElementById('show-questions')
+const showQuestions = document.getElementById('show-questions');
+const backToStart = document.getElementById('back-to-start');
 const backToStartBtn = document.getElementById('back-to-start-btn');
 const backToStartFromQuestions = document.getElementById('back-to-start-from-questions');
 const backToStartAfterCreation = document.getElementById('back-to-start-after-creation');
+const backToStartFromQuiz = document.getElementById('back-to-start-from-quiz');
 const loginText = document.getElementById('login-text');
 const userName = document.getElementById('user-name');
 const startScreen = document.getElementById('start-screen');
 const quizSelectionScreen = document.getElementById('quiz-selection-screen');
 const quizCreationScreen = document.getElementById('quiz-creation-screen');
 const questionCreationScreen = document.getElementById('question-creation-screen');
+const showQuestionsScreen = document.getElementById('show-questions-screen');
 const quizList = document.getElementById('quiz-list');
 const questionForm = document.getElementById('question-form');
 const quizForm = document.getElementById('quiz-form');
@@ -57,31 +60,18 @@ createQuestionsBtn.addEventListener("click", async () => {
   updateQuestionCount();
 });
 
-backToStartBtn1.addEventListener('click', () => {
-    showScreen(startScreen)
-    });
-
 selectQuizBtn.addEventListener('click', async () => {
     await loadQuizzes();
     displayQuizList();
     showScreen(quizSelectionScreen);
 });
 
-backToStartBtn.addEventListener('click', () => {
+backToStart.addEventListener('click', () => {
     showScreen(startScreen);
 });
 
-createQuestionsBtn.addEventListener("click", async () => {
-  showScreen(questionCreationScreen);
-  updateQuestionCount();
-});
-
-backToStartBtn1.addEventListener("click", () => {
-  showScreen(startScreen);
-});
-
-backToStartBtn.addEventListener("click", () => {
-  showScreen(startScreen);
+backToStartBtn.addEventListener('click', () => {
+    showScreen(startScreen);
 });
 
 backToStartFromQuestions.addEventListener("click", () => {
@@ -91,6 +81,10 @@ backToStartFromQuestions.addEventListener("click", () => {
 backToStartAfterCreation.addEventListener("click", () => {
   showScreen(startScreen);
   resetQuestionForm();
+});
+
+backToStartFromQuiz.addEventListener("click", () => {
+  showScreen(startScreen);
 });
 
 createAnotherQuestionBtn.addEventListener("click", () => {
@@ -337,7 +331,7 @@ questionForm.addEventListener('submit', async (e) => {
 });
 
 showQuestionsBtn.addEventListener("click", () => {
-  showScreen(showQuestionScreen);
+  showScreen(showQuestionsScreen);
   showQuestions.innerHTML = "";
   questions.forEach((question) => {
     const div = document.createElement("div");
@@ -435,7 +429,7 @@ function displayQuizList() {
         quizItem.className = 'quiz-item';
         quizItem.style.cssText = 'border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 8px; cursor: pointer;';
         quizItem.innerHTML = `
-            <h3>${quiz.name}</h3>
+            <h3>${quiz.title}</h3>
             <p><strong>Description:</strong> ${quiz.description || 'Aucune description'}</p>
             <div class="quiz-meta">
                 <span class="theme-badge theme-${quiz.theme}">${quiz.theme}</span>
@@ -443,6 +437,19 @@ function displayQuizList() {
                 <span class="questions-count">${quiz.questions ? quiz.questions.length : 0} questions</span>
             </div>
         `;
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "X";
+        quizItem.append(deleteBtn);
+        
+        deleteBtn.addEventListener("click", async () => {
+            const deletedQuizz = quiz.title;
+            fetch(`http://localhost:3000/quizz/delete/${quiz._id}`, {
+                method: "DELETE",
+            })
+                .then(console.log(deletedQuizz + " bien supprimé"))
+                .catch((err) => console.log(err));
+            quizItem.remove();
+            })
         
         quizItem.addEventListener('click', () => {
             console.log('Quiz sélectionné:', quiz);

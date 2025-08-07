@@ -5,5 +5,6 @@ const validatorQuizz = require("../validator/validatorQuizz")
 
 router.get("/", controller.showQuizz);
 router.post("/", validatorQuizz, controller.createQuizz);
-// supp Quizz 
+router.delete("/delete/:id", controller.destroyQuizz) 
+
 module.exports = router;

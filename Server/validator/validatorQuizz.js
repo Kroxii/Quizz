@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     description: Joi.string().empty(''),
     theme: Joi.string().empty(''),
     level: Joi.string()
-      .valid("A1", "A2", "B1", "B2", "C1", "C2")
+      .valid("A1", "A2", "B1", "B2", "C1", "C2", "mixte")
       .required()
       .messages({
         "any.only": "Le niveau doit être A1,A2,B1,B2,C1,C2",
