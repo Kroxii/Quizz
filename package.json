@@ -40,6 +40,7 @@
     "escape-html": "^1.0.3",
     "etag": "^1.8.1",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
     "fill-range": "^7.1.1",
     "finalhandler": "^2.1.0",
     "forwarded": "^0.2.0",
@@ -144,7 +145,8 @@
     "vary": "^1.1.2",
     "webidl-conversions": "^7.0.0",
     "whatwg-url": "^14.2.0",
-    "wrappy": "^1.0.2"
+    "wrappy": "^1.0.2",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
