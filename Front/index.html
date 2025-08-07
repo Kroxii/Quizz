@@ -87,19 +87,31 @@
             <label for="quiz-level">Niveau de difficulté :</label>
             <select id="quiz-level" name="quiz-level" required>
               <option value="">Sélectionnez un niveau</option>
-              <option value="facile">Facile</option>
-              <option value="moyen">Moyen</option>
-              <option value="difficile">Difficile</option>
-              <option value="mixte">Mixte</option>
+              <option value="A1">A1</option>
+              <option value="A2">A2</option>
+              <option value="B1">B1</option>
+              <option value="B2">B2</option>
+              <option value="C1">C1</option>
+              <option value="C2">C2</option>
             </select>
           </div>
 
           <div class="form-group">
             <label>Sélection des questions :</label>
-            <div id="available-questions" class="questions-list"></div>
-            <p class="help-text">
-              Cochez les questions que vous souhaitez inclure dans ce quiz
-            </p>
+            <div class="question-selector">
+              <select id="questions-dropdown" class="questions-dropdown">
+                <option value="">-- Sélectionnez une question à ajouter --</option>
+              </select>
+              <button type="button" id="add-question-btn" class="btn btn-secondary">
+                Ajouter la question
+              </button>
+            </div>
+            <div id="selected-questions-list" class="selected-questions-list">
+              <h4>Questions sélectionnées :</h4>
+              <div id="selected-questions-container" class="selected-questions-container">
+                <p class="no-questions-message">Aucune question sélectionnée</p>
+              </div>
+            </div>
           </div>
 
           <div class="form-actions">
@@ -170,9 +182,12 @@
             <label for="question-level">Niveau :</label>
             <select id="question-level" name="question-level" required>
               <option value="">Sélectionnez un niveau</option>
-              <option value="facile">Facile</option>
-              <option value="moyen">Moyen</option>
-              <option value="difficile">Difficile</option>
+              <option value="A1">A1</option>
+              <option value="A2">A2</option>
+              <option value="B1">B1</option>
+              <option value="B2">B2</option>
+              <option value="C1">C1</option>
+              <option value="C2">C2</option>
             </select>
           </div>
 
@@ -304,7 +319,7 @@
             </button>
             <button
               type="button"
-              id="back-to-start-from-questions"
+              id="back-to-start-from-modify"
               class="btn btn-secondary"
             >
               Retour

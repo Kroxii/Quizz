@@ -16,6 +16,9 @@ const backToStartAfterCreation = document.getElementById(
 const backToStartFromQuiz = document.getElementById(
   "back-to-start-from-quiz"
 );
+const backToStartFromModify = document.getElementById(
+  "back-to-start-from-modify"
+);
 const loginText = document.getElementById("login-text");
 const userName = document.getElementById("user-name");
 const startScreen = document.getElementById("start-screen");
@@ -28,7 +31,9 @@ const quizList = document.getElementById("quiz-list");
 const questionForm = document.getElementById("question-form");
 const quizForm = document.getElementById("quiz-form");
 const quizSuccessMessage = document.getElementById("quiz-success-message");
-const availableQuestions = document.getElementById("available-questions");
+const questionsDropdown = document.getElementById("questions-dropdown");
+const addQuestionBtn = document.getElementById("add-question-btn");
+const selectedQuestionsContainer = document.getElementById("selected-questions-container");
 const addAnswerBtn = document.getElementById("add-answer-btn");
 const createAnotherQuestionBtn = document.getElementById(
   "create-another-question-btn"
@@ -39,6 +44,7 @@ const questionSuccessMessage = document.getElementById(
 let currentUser = null;
 let questions = [];
 let quizzes = [];
+let selectedQuestions = [];
 
 async function loadQuestions() {
   try {
@@ -66,7 +72,9 @@ function showScreen(screenToShow) {
 
 createQuizBtn.addEventListener("click", async () => {
   await loadQuestions();
-  displayAvailableQuestions();
+  populateQuestionsDropdown();
+  selectedQuestions = [];
+  displaySelectedQuestions();
   showScreen(quizCreationScreen);
 });
 
@@ -106,6 +114,10 @@ backToStartFromQuiz.addEventListener("click", () => {
   showScreen(startScreen);
 });
 
+backToStartFromModify.addEventListener("click", () => {
+  showScreen(startScreen);
+});
+
 createAnotherQuestionBtn.addEventListener("click", () => {
   questionSuccessMessage.classList.add("hidden");
   questionForm.classList.remove("hidden");
@@ -118,8 +130,12 @@ if (createAnotherQuizBtn) {
     quizSuccessMessage.classList.add("hidden");
     quizForm.classList.remove("hidden");
     resetQuizForm();
-    displayAvailableQuestions();
+    populateQuestionsDropdown();
   });
+}
+
+if (addQuestionBtn) {
+  addQuestionBtn.addEventListener("click", addSelectedQuestion);
 }
 
 addAnswerBtn.addEventListener('click', addAnswerOption);
@@ -356,7 +372,7 @@ questionForm.addEventListener("submit", async (e) => {
 });
 
 showQuestionsBtn.addEventListener("click", () => {
-  showScreen(showQuestionsScreen);
+  showScreen(showQuestionScreen);
   showQuestions.innerHTML = "";
   questions.forEach((question) => {
     const div = document.createElement("div");
@@ -529,39 +545,99 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadQuizzes();
   updateQuestionCount();
 
-  if (availableQuestions) {
-    displayAvailableQuestions();
+  if (questionsDropdown) {
+    populateQuestionsDropdown();
   }
 });
 
-function displayAvailableQuestions() {
-  if (!availableQuestions) return;
+function populateQuestionsDropdown() {
+  if (!questionsDropdown) return;
 
-  availableQuestions.innerHTML = "";
+  questionsDropdown.innerHTML = '<option value="">-- Sélectionnez une question à ajouter --</option>';
 
   if (questions.length === 0) {
-    availableQuestions.innerHTML =
-      "<p>Aucune question disponible pour le moment. Créez d'abord des questions.</p>";
+    const noQuestionsOption = document.createElement("option");
+    noQuestionsOption.textContent = "Aucune question disponible";
+    noQuestionsOption.disabled = true;
+    questionsDropdown.appendChild(noQuestionsOption);
     return;
   }
 
   questions.forEach((question, index) => {
-    const questionItem = document.createElement("div");
-    questionItem.className = "question-item";
-    questionItem.innerHTML = `
-            <label class="question-checkbox">
-                <input type="checkbox" name="selected-questions" value="${index}">
-                <div class="question-text">${question.label}</div>
-                <div class="question-meta">
-                    <span class="theme-badge theme-${question.theme}">${question.theme}</span>
-                    <span class="level-badge level-${question.level}">${question.level}</span>
-                    <span class="answers-count">${question.choix.length}</span>
-                </div>
-            </div>
-        </label>
-    `;
-    availableQuestions.appendChild(questionItem);
+    const option = document.createElement("option");
+    option.value = index;
+    option.textContent = `${question.label} (${question.theme} - ${question.level})`;
+    questionsDropdown.appendChild(option);
   });
+}
+
+function displaySelectedQuestions() {
+  if (!selectedQuestionsContainer) return;
+
+  selectedQuestionsContainer.innerHTML = "";
+
+  if (selectedQuestions.length === 0) {
+    const noQuestionsMessage = document.createElement("p");
+    noQuestionsMessage.className = "no-questions-message";
+    noQuestionsMessage.textContent = "Aucune question sélectionnée";
+    selectedQuestionsContainer.appendChild(noQuestionsMessage);
+    return;
+  }
+
+  selectedQuestions.forEach((questionIndex, listIndex) => {
+    const question = questions[questionIndex];
+    if (!question) return;
+
+    const questionItem = document.createElement("div");
+    questionItem.className = "selected-question-item";
+    questionItem.innerHTML = `
+      <div class="question-content">
+        <div class="question-title">${question.label}</div>
+        <div class="question-badges">
+          <span class="theme-badge">${question.theme}</span>
+          <span class="level-badge">${question.level}</span>
+        </div>
+      </div>
+      <button type="button" class="remove-question-btn" data-index="${listIndex}">
+        ✕
+      </button>
+    `;
+    
+    const removeBtn = questionItem.querySelector(".remove-question-btn");
+    removeBtn.addEventListener("click", () => removeSelectedQuestion(listIndex));
+
+    selectedQuestionsContainer.appendChild(questionItem);
+  });
+}
+
+function addSelectedQuestion() {
+  const selectedIndex = questionsDropdown.value;
+  
+  if (!selectedIndex || selectedIndex === "") {
+    alert("Veuillez sélectionner une question à ajouter.");
+    return;
+  }
+
+  const questionIndex = parseInt(selectedIndex);
+  
+  // Regarde si la question est déjà sélectionnée
+  if (selectedQuestions.includes(questionIndex)) {
+    alert("Cette question est déjà sélectionnée.");
+    questionsDropdown.value = "";
+    return;
+  }
+
+  selectedQuestions.push(questionIndex);
+  displaySelectedQuestions();
+  questionsDropdown.value = "";
+  
+  console.log("Question ajoutée. Total sélectionné:", selectedQuestions.length);
+}
+
+function removeSelectedQuestion(listIndex) {
+  selectedQuestions.splice(listIndex, 1);
+  displaySelectedQuestions();
+  console.log("Question supprimée. Total sélectionné:", selectedQuestions.length);
 }
 
 function displayQuizList() {
@@ -610,12 +686,11 @@ function resetQuizForm() {
   if (!quizForm) return;
 
   quizForm.reset();
-  const checkboxes = document.querySelectorAll(
-    'input[name="selected-questions"]'
-  );
-  checkboxes.forEach((checkbox) => {
-    checkbox.checked = false;
-  });
+  selectedQuestions = [];
+  displaySelectedQuestions();
+  if (questionsDropdown) {
+    questionsDropdown.value = "";
+  }
 }
 
 async function saveQuizToDatabase(quizData) {
@@ -667,19 +742,15 @@ quizForm.addEventListener("submit", async (e) => {
     alert("Veuillez sélectionner un niveau.");
     return;
   }
-  const selectedQuestions = [];
-  const checkboxes = document.querySelectorAll(
-    'input[name="selected-questions"]:checked'
-  );
 
-  if (checkboxes.length === 0) {
+  if (selectedQuestions.length === 0) {
     alert("Veuillez sélectionner au moins une question pour le quiz.");
     return;
   }
 
-  checkboxes.forEach((checkbox) => {
-    const questionIndex = parseInt(checkbox.value);
-    selectedQuestions.push(questions[questionIndex]._id);
+  const selectedQuestionIds = [];
+  selectedQuestions.forEach((questionIndex) => {
+    selectedQuestionIds.push(questions[questionIndex]._id);
   });
 
   const newQuiz = {
@@ -687,7 +758,7 @@ quizForm.addEventListener("submit", async (e) => {
     description: quizDescription.trim(),
     theme: quizTheme,
     level: quizLevel,
-    questions: selectedQuestions,
+    questions: selectedQuestionIds,
   };
 
   console.log("Nouveau quiz créé:", newQuiz);
