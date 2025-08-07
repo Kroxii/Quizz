@@ -1,31 +1,3 @@
-<<<<<<< HEAD
-const loginBtn = document.getElementById('login-btn');
-const createQuizBtn = document.getElementById('create-quiz-btn');
-const createQuestionsBtn = document.getElementById('create-questions-btn');
-const selectQuizBtn = document.getElementById('select-quiz-btn');
-const showQuestionsBtn = document.getElementById('show-questions-btn');
-const showQuestions = document.getElementById('show-questions');
-const backToStart = document.getElementById('back-to-start');
-const backToStartBtn = document.getElementById('back-to-start-btn');
-const backToStartFromQuestions = document.getElementById('back-to-start-from-questions');
-const backToStartAfterCreation = document.getElementById('back-to-start-after-creation');
-const backToStartFromQuiz = document.getElementById('back-to-start-from-quiz');
-const loginText = document.getElementById('login-text');
-const userName = document.getElementById('user-name');
-const startScreen = document.getElementById('start-screen');
-const quizSelectionScreen = document.getElementById('quiz-selection-screen');
-const quizCreationScreen = document.getElementById('quiz-creation-screen');
-const questionCreationScreen = document.getElementById('question-creation-screen');
-const showQuestionsScreen = document.getElementById('show-questions-screen');
-const quizList = document.getElementById('quiz-list');
-const questionForm = document.getElementById('question-form');
-const quizForm = document.getElementById('quiz-form');
-const quizSuccessMessage = document.getElementById('quiz-success-message');
-const availableQuestions = document.getElementById('available-questions');
-const addAnswerBtn = document.getElementById('add-answer-btn');
-const createAnotherQuestionBtn = document.getElementById('create-another-question-btn');
-const questionSuccessMessage = document.getElementById('question-success-message');
-=======
 const loginBtn = document.getElementById("login-btn");
 const createQuizBtn = document.getElementById("create-quiz-btn");
 const createQuestionsBtn = document.getElementById("create-questions-btn");
@@ -61,7 +33,6 @@ const createAnotherQuestionBtn = document.getElementById(
 const questionSuccessMessage = document.getElementById(
   "question-success-message"
 );
->>>>>>> 5609f1571678460e4d58b17859f12036841bf0da
 let currentUser = null;
 let questions = [];
 let quizzes = [];
@@ -101,12 +72,6 @@ createQuestionsBtn.addEventListener("click", async () => {
   updateQuestionCount();
 });
 
-<<<<<<< HEAD
-selectQuizBtn.addEventListener('click', async () => {
-    await loadQuizzes();
-    displayQuizList();
-    showScreen(quizSelectionScreen);
-=======
 backToStartBtn1.addEventListener("click", () => {
   showScreen(startScreen);
 });
@@ -115,7 +80,6 @@ selectQuizBtn.addEventListener("click", async () => {
   await loadQuizzes();
   displayQuizList();
   showScreen(quizSelectionScreen);
->>>>>>> 5609f1571678460e4d58b17859f12036841bf0da
 });
 
 backToStart.addEventListener('click', () => {
@@ -608,15 +572,6 @@ function displayQuizList() {
     return;
   }
 
-<<<<<<< HEAD
-    quizzes.forEach((quiz, index) => {
-        const quizItem = document.createElement('div');
-        quizItem.className = 'quiz-item';
-        quizItem.style.cssText = 'border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 8px; cursor: pointer;';
-        quizItem.innerHTML = `
-            <h3>${quiz.title}</h3>
-            <p><strong>Description:</strong> ${quiz.description || 'Aucune description'}</p>
-=======
   quizzes.forEach((quiz, index) => {
     const quizItem = document.createElement("div");
     quizItem.className = "quiz-item";
@@ -627,7 +582,6 @@ function displayQuizList() {
             <p><strong>Description:</strong> ${
               quiz.description || "Aucune description"
             }</p>
->>>>>>> 5609f1571678460e4d58b17859f12036841bf0da
             <div class="quiz-meta">
                 <span class="theme-badge theme-${quiz.theme}">${
       quiz.theme
@@ -640,31 +594,9 @@ function displayQuizList() {
                 } questions</span>
             </div>
         `;
-<<<<<<< HEAD
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "X";
-        quizItem.append(deleteBtn);
-        
-        deleteBtn.addEventListener("click", async () => {
-            const deletedQuizz = quiz.title;
-            fetch(`http://localhost:3000/quizz/delete/${quiz._id}`, {
-                method: "DELETE",
-            })
-                .then(console.log(deletedQuizz + " bien supprimé"))
-                .catch((err) => console.log(err));
-            quizItem.remove();
-            })
-        
-        quizItem.addEventListener('click', () => {
-            console.log('Quiz sélectionné:', quiz);
-        });
-        
-        quizList.appendChild(quizItem);
-=======
 
     quizItem.addEventListener("click", () => {
       console.log("Quiz sélectionné:", quiz);
->>>>>>> 5609f1571678460e4d58b17859f12036841bf0da
     });
 
     quizList.appendChild(quizItem);
