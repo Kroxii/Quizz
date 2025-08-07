@@ -370,7 +370,7 @@ showQuestionsBtn.addEventListener("click", () => {
     const questionLevel = document.getElementById("level");
     console.log(questionLevel);
     const answersContainer = document.getElementById("answers");
-
+    const questionModifyForm = document.getElementById("questionModifyForm");
     modifBtn.addEventListener("click", async () => {
       const modifQuestion = question.label;
       showScreen(questionModifScreen);
@@ -408,7 +408,7 @@ showQuestionsBtn.addEventListener("click", () => {
     });
   });
 });
-// ! Maintenant rajouter le faire que c'est as envoyer l'objet modifier et le rec dans la DB 
+// ! Maintenant rajouter le faire que c'est as envoyer l'objet modifier et le rec dans la DB
 
 document.addEventListener("DOMContentLoaded", () => {
   loadQuestions().then(() => {
