@@ -331,7 +331,7 @@ questionForm.addEventListener("submit", async (e) => {
     },
     body: JSON.stringify(newQuestion),
   });
-  console.log(questions);
+  console.log();
 
   loadQuestions();
 });
@@ -371,6 +371,7 @@ showQuestionsBtn.addEventListener("click", () => {
     console.log(questionLevel);
     const answersContainer = document.getElementById("answers");
     const questionModifyForm = document.getElementById("questionModifyForm");
+
     modifBtn.addEventListener("click", async () => {
       const modifQuestion = question.label;
       showScreen(questionModifScreen);
@@ -396,6 +397,7 @@ showQuestionsBtn.addEventListener("click", () => {
                   <input
                     type="radio"
                     name="correct-answer"
+                    class="correct-radio"
                     ${choi.good ? "checked" : ""}
                     required
                   />
@@ -405,14 +407,83 @@ showQuestionsBtn.addEventListener("click", () => {
         `;
         console.log(choi.good);
       });
+
+      questionModifyForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(questionModifyForm);
+        const questionText = formData.get("question-text");
+        const theme = formData.get("question-theme");
+        const level = formData.get("question-level");
+        const correctAnswerIndex = formData.get("correct-answer");
+        const answerTexts = questionModifyForm.querySelectorAll(".answer-text");
+        const answers = [];
+        const correctIndex =
+          correctAnswerIndex !== undefined ? parseInt(correctAnswerIndex) : -1;
+
+        const correctRadios = document.querySelectorAll(".correct-radio");
+
+        console.log("Données du formulaire:");
+        console.log("- Question:", questionText);
+        console.log("- Thème:", theme);
+        console.log("- Niveau:", level);
+        console.log("- Index réponse correcte:", correctAnswerIndex);
+
+        answerTexts.forEach((input, index) => {
+          console.log(input.value + "console.log 1 ");
+          const answerText = input.value.trim();
+          if (answerText) {
+            const answer = {
+              label: answerText,
+              good: index === correctIndex,
+            };
+            answers.push(answer);
+            console.log(
+              `- Réponse ${index + 1}: "${answerText}" ${
+                answer.good ? "(CORRECTE)" : ""
+              }`
+            );
+          }
+        });
+
+        console.log(answers + "console.log 2 ");
+        console.log(answerTexts);
+
+        const newQuestion = {
+          label: questionText.trim(),
+          theme: theme,
+          level: level,
+          choix: answers,
+        };
+
+        questions.push(newQuestion);
+        console.log("✅ Nouvelle question créée avec succès:", newQuestion);
+        console.log("=== FIN DU DÉBOGAGE ===");
+        questionForm.classList.add("hidden");
+        questionSuccessMessage.classList.remove("hidden");
+
+        const response = await fetch(
+          `http://localhost:3000/question/update/${question._id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newQuestion),
+          }
+        )
+        
+        .then(console.log(modifQuestion + " bien Modifier"))
+        .catch((err) => console.log(err));
+        
+        console.log(question._id + "id de la question")
+      
+        });
+
     });
   });
 });
 // ! Maintenant rajouter le faire que c'est as envoyer l'objet modifier et le rec dans la DB
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
   loadQuestions().then(() => {
