@@ -7,26 +7,16 @@ const showQuestionScreen = document.getElementById("show-questions-screen");
 let showQuestions = document.getElementById("show-questions");
 const backToStartBtn1 = document.getElementById("back-to-start");
 const backToStartBtn = document.getElementById("back-to-start-btn");
-const backToStartFromQuestions = document.getElementById(
-  "back-to-start-from-questions"
-);
-const backToStartAfterCreation = document.getElementById(
-  "back-to-start-after-creation"
-);
-const backToStartFromQuiz = document.getElementById(
-  "back-to-start-from-quiz"
-);
-const backToStartFromModify = document.getElementById(
-  "back-to-start-from-modify"
-);
+const backToStartFromQuestions = document.getElementById("back-to-start-from-questions");
+const backToStartAfterCreation = document.getElementById("back-to-start-after-creation");
+const backToStartFromQuiz = document.getElementById("back-to-start-from-quiz");
+const backToStartFromModify = document.getElementById("back-to-start-from-modify");
 const loginText = document.getElementById("login-text");
 const userName = document.getElementById("user-name");
 const startScreen = document.getElementById("start-screen");
 const quizSelectionScreen = document.getElementById("quiz-selection-screen");
 const quizCreationScreen = document.getElementById("quiz-creation-screen");
-const questionCreationScreen = document.getElementById(
-  "question-creation-screen"
-);
+const questionCreationScreen = document.getElementById("question-creation-screen");
 const quizList = document.getElementById("quiz-list");
 const questionForm = document.getElementById("question-form");
 const quizForm = document.getElementById("quiz-form");
@@ -35,12 +25,8 @@ const questionsDropdown = document.getElementById("questions-dropdown");
 const addQuestionBtn = document.getElementById("add-question-btn");
 const selectedQuestionsContainer = document.getElementById("selected-questions-container");
 const addAnswerBtn = document.getElementById("add-answer-btn");
-const createAnotherQuestionBtn = document.getElementById(
-  "create-another-question-btn"
-);
-const questionSuccessMessage = document.getElementById(
-  "question-success-message"
-);
+const createAnotherQuestionBtn = document.getElementById("create-another-question-btn");
+const questionSuccessMessage = document.getElementById("question-success-message");
 let currentUser = null;
 let questions = [];
 let quizzes = [];
