@@ -403,7 +403,6 @@ showQuestionsBtn.addEventListener("click", () => {
     const questionLabel = document.getElementById("label");
     const questionTheme = document.getElementById("theme");
     const questionLevel = document.getElementById("level");
-    console.log(questionLevel);
     const answersContainer = document.getElementById("answers");
     const questionModifyForm = document.getElementById("questionModifyForm");
 
@@ -432,7 +431,7 @@ showQuestionsBtn.addEventListener("click", () => {
                   <input
                     type="radio"
                     name="correct-answer"
-                    class="correct-radio"
+                    value=${question.choix.indexOf(choi)}
                     ${choi.good ? "checked" : ""}
                     required
                   />
@@ -451,17 +450,13 @@ showQuestionsBtn.addEventListener("click", () => {
         const theme = formData.get("question-theme");
         const level = formData.get("question-level");
         const correctAnswerIndex = formData.get("correct-answer");
+        console.log(correctAnswerIndex)
         const answerTexts = questionModifyForm.querySelectorAll(".answer-text");
         const answers = [];
         const correctIndex =
           correctAnswerIndex !== undefined ? parseInt(correctAnswerIndex) : -1;
 
         const correctRadios = document.querySelectorAll(".correct-radio");
-
-        console.log("Données du formulaire:");
-        console.log("- Question:", questionText);
-        console.log("- Thème:", theme);
-        console.log("- Niveau:", level);
         console.log("- Index réponse correcte:", correctAnswerIndex);
 
         answerTexts.forEach((input, index) => {
@@ -480,9 +475,6 @@ showQuestionsBtn.addEventListener("click", () => {
             );
           }
         });
-
-        console.log(answers + "console.log 2 ");
-        console.log(answerTexts);
 
         const newQuestion = {
           label: questionText.trim(),
@@ -651,6 +643,7 @@ function displayQuizList() {
     return;
   }
 
+<<<<<<< HEAD
   quizzes.forEach((quiz, index) => {
     const quizItem = document.createElement("div");
     quizItem.className = "quiz-item";
@@ -661,6 +654,15 @@ function displayQuizList() {
             <p><strong>Description:</strong> ${
               quiz.description || "Aucune description"
             }</p>
+=======
+    quizzes.forEach((quiz, index) => {
+        const quizItem = document.createElement('div');
+        quizItem.className = 'quiz-item';
+        quizItem.style.cssText = 'border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 8px; cursor: pointer;';
+        quizItem.innerHTML = `
+            <h3>${quiz.title}</h3>
+            <p><strong>Description:</strong> ${quiz.description || 'Aucune description'}</p>
+>>>>>>> 7c60946d6afb4458e921a6ae5b246775fe25b95d
             <div class="quiz-meta">
                 <span class="theme-badge theme-${quiz.theme}">${
       quiz.theme
@@ -673,13 +675,32 @@ function displayQuizList() {
                 } questions</span>
             </div>
         `;
+<<<<<<< HEAD
 
     quizItem.addEventListener("click", () => {
       console.log("Quiz sélectionné:", quiz);
+=======
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "X";
+        quizItem.append(deleteBtn);
+        
+        deleteBtn.addEventListener("click", async () => {
+            const deletedQuizz = quiz.title;
+            fetch(`http://localhost:3000/quizz/delete/${quiz._id}`, {
+                method: "DELETE",
+            })
+                .then(console.log(deletedQuizz + " bien supprimé"))
+                .catch((err) => console.log(err));
+            quizItem.remove();
+            })
+        
+        quizItem.addEventListener('click', () => {
+            console.log('Quiz sélectionné:', quiz);
+        });
+        
+        quizList.appendChild(quizItem);
+>>>>>>> 7c60946d6afb4458e921a6ae5b246775fe25b95d
     });
-
-    quizList.appendChild(quizItem);
-  });
 }
 
 function resetQuizForm() {
