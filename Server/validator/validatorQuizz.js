@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
       }),
   });
 
-  const { error, value } = validatorQuestion.validate(req.body);
+  const { error } = validatorQuestion.validate(req.body);
   if (error) {
     console.log(error)
     res.status(400).json({ 
