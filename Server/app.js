@@ -14,5 +14,6 @@ app.use("/quizz", quizz);
 
 app.listen(port, () => {
   connectDB();
-  console.log("http://localhost:" + port);
+  console.log("http://localhost:" + port );
+  console.log("http://127.0.0.1:5500/Front/" );
 });
