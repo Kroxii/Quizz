@@ -13,6 +13,9 @@ const backToStartFromQuestions = document.getElementById(
 const backToStartAfterCreation = document.getElementById(
   "back-to-start-after-creation"
 );
+const backToStartFromQuiz = document.getElementById(
+  "back-to-start-from-quiz"
+);
 const loginText = document.getElementById("login-text");
 const userName = document.getElementById("user-name");
 const startScreen = document.getElementById("start-screen");
@@ -82,7 +85,7 @@ selectQuizBtn.addEventListener("click", async () => {
   showScreen(quizSelectionScreen);
 });
 
-backToStart.addEventListener('click', () => {
+backToStartBtn1.addEventListener('click', () => {
     showScreen(startScreen);
 });
 
