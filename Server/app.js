@@ -5,27 +5,34 @@ const question = require("./routers/questionRouter.js");
 const quizz = require("./routers/quizzRouter.js");
 const helmet = require("helmet");
 const cors = require("cors");
-const xss = require('xss-clean');
+// const xss = require('xss-clean');
 // veut pas s'importer
-const rateLimit = require("express-rate-limit");
+// const rateLimit = require("express-rate-limit");
 const dotenv = require("dotenv");
 dotenv.config();
 const PORT = process.env.PORT;
 
 // Configuration du limiteur de requête
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limite chaque IP à 100 requêtes par fenêtre
-  message: "Trop de requêtes depuis cette IP, veuillez réessayer plus tard.",
-  standardHeaders: true, // Retourne les headers RateLimit standard
-  legacyHeaders: false, // Désactive les headers obsolètes
-});
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 100, // limite chaque IP à 100 requêtes par fenêtre
+//   message: "Trop de requêtes depuis cette IP, veuillez réessayer plus tard.",
+//   standardHeaders: true, // Retourne les headers RateLimit standard
+//   legacyHeaders: false, // Désactive les headers obsolètes
+// });
+
+const corsOptions = {
+origin: 'http://127.0.0.1:5500/Front/',
+origin: 'http://localhost:3000/',
+optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
-app.use(xss());
-app.use(limiter);
+app.use(corsOptions);
+// app.use(xss());
+// app.use(limiter);
 
 app.use("/question", question);
 app.use("/quizz", quizz);
