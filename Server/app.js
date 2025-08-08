@@ -3,7 +3,7 @@ const app = express();
 const connectDB = require("./connectDB/connectDB.js");
 const question = require("./routers/questionRouter.js");
 const quizz = require("./routers/quizzRouter.js");
-const helmet = require("helmet");
+// const helmet = require("helmet");
 const cors = require("cors");
 // const xss = require('xss-clean');
 // veut pas s'importer
@@ -23,14 +23,13 @@ const PORT = process.env.PORT;
 // });
 
 const corsOptions = {
-origin: 'http://127.0.0.1:5500/Front/',
-origin: 'http://localhost:3000/',
+origin: 'http://127.0.0.1:5500/',
 optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
 app.use(express.json());
-app.use(helmet());
-app.use(corsOptions);
+// app.use(helmet());
+app.use(cors(corsOptions));
 // app.use(xss());
 // app.use(limiter);
 
