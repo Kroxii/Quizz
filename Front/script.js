@@ -11,6 +11,16 @@ const backToStartFromQuestions = document.getElementById("back-to-start-from-que
 const backToStartAfterCreation = document.getElementById("back-to-start-after-creation");
 const backToStartFromQuiz = document.getElementById("back-to-start-from-quiz");
 const backToStartFromModify = document.getElementById("back-to-start-from-modify");
+const backToStartFromQuestions = document.getElementById(
+  "back-to-start-from-questions"
+);
+const backToStartAfterCreation = document.getElementById(
+  "back-to-start-after-creation"
+);
+const backToStartFromQuiz = document.getElementById("back-to-start-from-quiz");
+const backToStartFromModify = document.getElementById(
+  "back-to-start-from-modify"
+);
 const loginText = document.getElementById("login-text");
 const userName = document.getElementById("user-name");
 const startScreen = document.getElementById("start-screen");
@@ -23,7 +33,9 @@ const quizForm = document.getElementById("quiz-form");
 const quizSuccessMessage = document.getElementById("quiz-success-message");
 const questionsDropdown = document.getElementById("questions-dropdown");
 const addQuestionBtn = document.getElementById("add-question-btn");
-const selectedQuestionsContainer = document.getElementById("selected-questions-container");
+const selectedQuestionsContainer = document.getElementById(
+  "selected-questions-container"
+);
 const addAnswerBtn = document.getElementById("add-answer-btn");
 const createAnotherQuestionBtn = document.getElementById("create-another-question-btn");
 const questionSuccessMessage = document.getElementById("question-success-message");
@@ -79,12 +91,12 @@ selectQuizBtn.addEventListener("click", async () => {
   showScreen(quizSelectionScreen);
 });
 
-backToStartBtn1.addEventListener('click', () => {
-    showScreen(startScreen);
+backToStartBtn1.addEventListener("click", () => {
+  showScreen(startScreen);
 });
 
-backToStartBtn.addEventListener('click', () => {
-    showScreen(startScreen);
+backToStartBtn.addEventListener("click", () => {
+  showScreen(startScreen);
 });
 
 backToStartFromQuestions.addEventListener("click", () => {
@@ -124,7 +136,7 @@ if (addQuestionBtn) {
   addQuestionBtn.addEventListener("click", addSelectedQuestion);
 }
 
-addAnswerBtn.addEventListener('click', addAnswerOption);
+addAnswerBtn.addEventListener("click", addAnswerOption);
 createAnotherQuestionBtn.addEventListener("click", () => {
   questionSuccessMessage.classList.add("hidden");
   questionForm.classList.remove("hidden");
@@ -436,7 +448,7 @@ showQuestionsBtn.addEventListener("click", () => {
         const theme = formData.get("question-theme");
         const level = formData.get("question-level");
         const correctAnswerIndex = formData.get("correct-answer");
-        console.log(correctAnswerIndex)
+        console.log(correctAnswerIndex);
         const answerTexts = questionModifyForm.querySelectorAll(".answer-text");
         const answers = [];
         const correctIndex =
@@ -485,14 +497,11 @@ showQuestionsBtn.addEventListener("click", () => {
             body: JSON.stringify(newQuestion),
           }
         )
-        
-        .then(console.log(modifQuestion + " bien Modifier"))
-        .catch((err) => console.log(err));
-        
-        console.log(question._id + "id de la question")
-      
-        });
+          .then(console.log(modifQuestion + " bien Modifier"))
+          .catch((err) => console.log(err));
 
+        console.log(question._id + "id de la question");
+      });
     });
   });
 });
@@ -531,7 +540,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 function populateQuestionsDropdown() {
   if (!questionsDropdown) return;
 
-  questionsDropdown.innerHTML = '<option value="">-- Sélectionnez une question à ajouter --</option>';
+  questionsDropdown.innerHTML =
+    '<option value="">-- Sélectionnez une question à ajouter --</option>';
 
   if (questions.length === 0) {
     const noQuestionsOption = document.createElement("option");
@@ -580,9 +590,11 @@ function displaySelectedQuestions() {
         ✕
       </button>
     `;
-    
+
     const removeBtn = questionItem.querySelector(".remove-question-btn");
-    removeBtn.addEventListener("click", () => removeSelectedQuestion(listIndex));
+    removeBtn.addEventListener("click", () =>
+      removeSelectedQuestion(listIndex)
+    );
 
     selectedQuestionsContainer.appendChild(questionItem);
   });
@@ -590,14 +602,14 @@ function displaySelectedQuestions() {
 
 function addSelectedQuestion() {
   const selectedIndex = questionsDropdown.value;
-  
+
   if (!selectedIndex || selectedIndex === "") {
     alert("Veuillez sélectionner une question à ajouter.");
     return;
   }
 
   const questionIndex = parseInt(selectedIndex);
-  
+
   // Regarde si la question est déjà sélectionnée
   if (selectedQuestions.includes(questionIndex)) {
     alert("Cette question est déjà sélectionnée.");
@@ -608,14 +620,17 @@ function addSelectedQuestion() {
   selectedQuestions.push(questionIndex);
   displaySelectedQuestions();
   questionsDropdown.value = "";
-  
+
   console.log("Question ajoutée. Total sélectionné:", selectedQuestions.length);
 }
 
 function removeSelectedQuestion(listIndex) {
   selectedQuestions.splice(listIndex, 1);
   displaySelectedQuestions();
-  console.log("Question supprimée. Total sélectionné:", selectedQuestions.length);
+  console.log(
+    "Question supprimée. Total sélectionné:",
+    selectedQuestions.length
+  );
 }
 
 function displayQuizList() {
@@ -646,28 +661,29 @@ function displayQuizList() {
                 <span class="questions-count">${
                   quiz.questions ? quiz.questions.length : 0
                 } questions</span>
-            </div>
+              </div></>
         `;
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "X";
-        quizItem.append(deleteBtn);
-        
-        deleteBtn.addEventListener("click", async () => {
-            const deletedQuizz = quiz.title;
-            fetch(`http://localhost:3000/quizz/delete/${quiz._id}`, {
-                method: "DELETE",
-            })
-                .then(console.log(deletedQuizz + " bien supprimé"))
-                .catch((err) => console.log(err));
-            quizItem.remove();
-            })
-        
-        quizItem.addEventListener('click', () => {
-            console.log('Quiz sélectionné:', quiz);
-        });
-        
-        quizList.appendChild(quizItem);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "X";
+    quizItem.append(deleteBtn);
+
+    deleteBtn.addEventListener("click", async () => {
+      const deletedQuizz = quiz.title;
+      fetch(`http://localhost:3000/quizz/delete/${quiz._id}`, {
+        method: "DELETE",
+      })
+        .then(console.log(deletedQuizz + " bien supprimé"))
+        .catch((err) => console.log(err));
+      quizItem.remove();
     });
+
+    quizItem.addEventListener("click", () => {
+      console.log("Quiz sélectionné:", quiz);
+    });
+
+    quizList.appendChild(quizItem);
+  });
 }
 
 function resetQuizForm() {
