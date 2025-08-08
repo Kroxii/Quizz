@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+module.exports = (req, res, next) => {
   const validatorQuestion = Joi.object({
     lablel: Joi.String().min(3).required(),
     theme: Joi.String().min(3).required(),
@@ -23,6 +23,6 @@ module.exports = (req, res) => {
   if (error) {
     res.status(400).json({ error: error.detail[0].message });
   } else {
-    res.status(200).json({ message: "Question bien crée !", data: value });
+    next();
   }
 };

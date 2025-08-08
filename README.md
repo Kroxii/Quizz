@@ -1,6 +1,6 @@
 # Bienvenue dans le projet Quizz !
 
-Ce projet est une application web développée avec Node.js, conçue pour permettre aux professeurs (partie Admin) de créer, gérer et superviser des quiz.
+Ce projet est une site web développée avec Node.js, conçue pour permettre aux professeurs (partie Admin) de créer, gérer des quiz.
 
 Ce développement s'inscrit dans le cadre de notre projet Akaton réalisé en équipe durant notre formation. L'objectif : répondre aux besoins d’un client selon un cahier des charges précis.
 
