@@ -59,7 +59,7 @@ ou , pour le développement
 
 ```bash
 
-npx nodemon app.js
+npx nodemon server.js
 
 ```
 
